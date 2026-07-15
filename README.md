@@ -15,6 +15,6 @@ Companion Claude Code kit (agents, hooks, CLAUDE.md template): see ai-workflow-k
 This repo is private — you need read access (ask Cesar for an invite), plus git authenticated with GitHub on your machine.
 
 ```
-claude plugin marketplace add cesaridrovo/ai-workflow
+claude plugin marketplace add cesaratmba30/ai-workflow
 claude plugin install ai-workflow@cesaridrovo-plugins
 ```
