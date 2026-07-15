@@ -1,0 +1,15 @@
+{
+  "name": "ai-workflow",
+  "version": "0.2.0",
+  "description": "The AI-agent software workflow: 20 skills covering the full lifecycle - idea validation (roast), research (storm-research), intent elicitation (grill), prototyping, spec-to-issues, session bookends (resume/handoff), test-first building (tdd), review (code-review-pass, simplify, verify), diagnosis, design (codebase-design, domain-modeling, improve-codebase-architecture), and self-audits (doc-audit, harness-audit). v0.2 adds golden-thread traceability (from Rik Dryfoos/HomeFlow).",
+  "author": {
+    "name": "Cesar Idrovo (from Zain's Flowgauge method)"
+  },
+  "keywords": [
+    "workflow",
+    "tdd",
+    "code-review",
+    "planning",
+    "kanban"
+  ]
+}
