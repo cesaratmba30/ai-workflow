@@ -18,3 +18,11 @@ This repo is private — you need read access (ask Cesar for an invite), plus gi
 claude plugin marketplace add cesaratmba30/ai-workflow
 claude plugin install ai-workflow@cesaridrovo-plugins
 ```
+
+## Using with Codex CLI
+
+Codex supports the same SKILL.md format — no plugin install needed. Clone and copy the skills to your Codex skills directory:
+git clone https://github.com/cesaratmba30/ai-workflow.git
+cp -r ai-workflow/skills/* ~/.codex/skills/
+
+Or for a single project, copy them into `.agents/skills/` at the repo root — Codex discovers them automatically.
