@@ -32,3 +32,7 @@ Before delivery, re-check each load-bearing citation: the source exists, actuall
 ## Output
 
 The briefing document (markdown; HTML report template if the project has one). Feeds `/roast` verdicts, canon checks, and specs.
+
+## Attribution
+
+Method based on STORM (Stanford OVAL): Shao et al., *Assisting in Writing Wikipedia-like Articles From Scratch with Large Language Models* (2024) — [stanford-oval/storm](https://github.com/stanford-oval/storm) (MIT). Adapted from article generation to decision-support research briefings.

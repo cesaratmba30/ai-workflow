@@ -34,3 +34,7 @@ Based on Frederick Brooks' *design concept* (The Design of Design) — the share
 ## Output
 
 The play-back summary (and in docs mode, the glossary/ADR diffs). This feeds the spec/PRD or, for small changes, goes straight to `/to-issues`.
+
+## Attribution
+
+Derived from [`grill-me`](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) and [`grill-with-docs`](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Conceptual root: Frederick Brooks' *design concept* (The Design of Design). Evolved for this kit.

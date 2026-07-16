@@ -28,3 +28,7 @@ From John Ousterhout's *A Philosophy of Software Design*. AI compounds software 
 ## When actively designing
 
 State: the module's one-sentence purpose, its public interface (signatures), what it hides, its seam/tests, and what would make it shallower vs deeper. Prefer merging shallow modules into a deep one over adding another layer.
+
+## Attribution
+
+Distilled from John Ousterhout, *A Philosophy of Software Design* (deep modules, information hiding, complexity as the enemy). See also [agent-rules-books](https://github.com/mattpocock/agent-rules-books) (MIT) for comparable book-distilled rule sets.

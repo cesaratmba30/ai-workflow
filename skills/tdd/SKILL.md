@@ -26,3 +26,7 @@ Kent Beck's TDD, adapted for agents. Agents left alone write poor tests that are
 ## Done means
 
 Suite green, stated explicitly ("Tests: N pass, M new"). Then the change proceeds to review — green tests are necessary, not sufficient (they prove logic, not that it renders/runs; that's `/verify`).
+
+## Attribution
+
+Method: Kent Beck, *Test-Driven Development: By Example*; feedback-loop framing from *The Pragmatic Programmer* (Thomas & Hunt). Skill shape derived from [`tdd`](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Evolved for this kit.

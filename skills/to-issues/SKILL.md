@@ -24,3 +24,7 @@ The board is the live plan; each card carries its own rationale. This skill turn
 ## Output
 
 The ordered issue list with the dependency graph (mermaid or indented text), a note on which issues are parallelizable, and any spec ambiguities discovered while slicing (those go back to `/grill`, not into guesses).
+
+## Attribution
+
+Derived from [`to-issues`](https://github.com/mattpocock/skills/tree/main/skills/engineering/to-issues) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Evolved for this kit.

@@ -35,3 +35,7 @@ A slot is earned only by a decision a future session would otherwise re-open or 
 ## Rule for every other session
 
 Before naming any new concept, check CONTEXT.md. Use the canonical term or propose a new entry — never coin a synonym silently.
+
+## Attribution
+
+Ubiquitous language: Eric Evans, *Domain-Driven Design*. ADRs: Michael Nygard. Skill shape derived from [`grill-with-docs`](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Evolved for this kit.

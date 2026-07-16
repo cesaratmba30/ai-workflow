@@ -23,3 +23,7 @@ Prototype-before-spec is the "packaging first" instinct: react to something conc
 ## Output
 
 The stated question, the artifact, and the written answer. The answer feeds `/grill` or the spec.
+
+## Attribution
+
+Derived from [`prototype`](https://github.com/mattpocock/skills/tree/main/skills/engineering/prototype) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Evolved for this kit.

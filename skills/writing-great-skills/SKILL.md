@@ -32,3 +32,7 @@ A skill is a reusable, versioned "play". Badly written skills either never trigg
 ## When revising an existing skill
 
 Diagnose which failure mode occurred, fix by rewriting the smallest section, and state what changed — never silently rewrite a standing instruction.
+
+## Attribution
+
+Derived from [`write-a-skill`](https://github.com/mattpocock/skills/tree/main/skills/productivity/write-a-skill) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT), plus Anthropic's skill-authoring guidance. Evolved for this kit.

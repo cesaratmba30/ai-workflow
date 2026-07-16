@@ -32,3 +32,7 @@ Turn the repro into a permanent regression test (red), then apply the minimal fi
 - Search for sibling instances of the same mechanism elsewhere in the codebase.
 - Lessons land as code: if a ritual or guard would have caught this earlier, add it in the SAME session (tool > test > prose).
 - Report: cause → mechanism → fix → regression test, in that order.
+
+## Attribution
+
+Derived from [`diagnose`](https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnose) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Evolved for this kit.

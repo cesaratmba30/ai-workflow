@@ -28,3 +28,7 @@ No refactor executes from the survey alone. Each accepted candidate gets a short
 ## Output
 
 The ranked opportunity report (a doc/HTML report for anything substantial), and board issues for accepted candidates. Never a big-bang rewrite — deepening lands as a sequence of small, verified refactors.
+
+## Attribution
+
+Derived from [`improve-codebase-architecture`](https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Design vocabulary: John Ousterhout, *A Philosophy of Software Design*. Evolved for this kit.

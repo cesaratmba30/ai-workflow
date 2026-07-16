@@ -32,3 +32,7 @@ Update it every session (it's the teaching equivalent of the board: the record i
 - Never mark a concept "solid" without retrieval evidence from a later session.
 - Honesty applies: if the learner's answer is wrong, say so plainly and kindly — a false "great job" is a silent wrongness bug.
 - Real fluency is doing: bias toward exercises over exposition, roughly 1:1 time.
+
+## Attribution
+
+Grounded in learning-science literature: retrieval practice / testing effect (Roediger & Karpicke, 2006), spaced repetition (Ebbinghaus; Cepeda et al., 2006), worked examples (Sweller). Skill design original to this kit.

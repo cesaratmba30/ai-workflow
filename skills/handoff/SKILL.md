@@ -20,3 +20,7 @@ The bookend to `/resume`. The next session must resume from durable artifacts, n
 
 - Never claim "done" for anything not verified green.
 - The test of a good handoff: could a zero-context session `/resume` tomorrow and continue without reading this chat? If not, something is missing from the durable stores.
+
+## Attribution
+
+Derived from [`handoff`](https://github.com/mattpocock/skills/tree/main/skills/productivity/handoff) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Evolved for this kit.

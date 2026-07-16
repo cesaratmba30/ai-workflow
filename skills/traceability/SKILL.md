@@ -48,3 +48,7 @@ A fourth state, **silent gap**, is the only forbidden one. Debt is fine; silent 
 ## Output
 
 When minting: the ID registry. When checking: the gap/untraced-scope list (each a FAIL line) or "golden thread intact," plus the three-state summary. The kit's `check-traceability.template.sh` is the deterministic version — prefer wiring it into CI over re-running this skill by hand.
+
+## Attribution
+
+From Rik Dryfoos' [HomeFlow](https://github.com/rdryfoos/HomeFlow) traceability method (durable IDs carried PRD → spec → tasks → code → tests), itself rooted in GE Healthcare design-controls practice. Adapted for this kit with a machine-checked gate. Built to compose with GitHub's [Spec Kit](https://github.com/github/spec-kit).

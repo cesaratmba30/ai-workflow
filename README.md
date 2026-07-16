@@ -35,3 +35,10 @@ Copy-Item -Recurse ai-workflow\skills\* $env:USERPROFILE\.codex\skills\
 ```
 
 Or for a single project, copy them into `.agents/skills/` at the repo root — Codex discovers them automatically.
+
+## Credits
+
+This kit is derived from and inspired by prior work — most directly Matt Pocock's
+[Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT) and Rik Dryfoos'
+[HomeFlow](https://github.com/rdryfoos/HomeFlow) traceability method. Full per-skill
+attribution in [CREDITS.md](CREDITS.md) and in each skill's Attribution section.
