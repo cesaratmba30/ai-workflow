@@ -28,11 +28,11 @@ The owner picks. The pick is the first board move (Options → Ready).
 
 1. **Triage** — run the routing reflex above as a gated step. Tripwire seam ⇒ plan-first + a named anti-regression test. User-facing ⇒ re-run the canon check (ground in prior art; state the match-or-exceed call in 1–3 lines).
 2. **Plan** — for plan-first items: a file-level plan (approach, canon check, tripwire assessment, exact files) approved *before* a line is written. The plan IS the research step. The plan must be airtight before any handoff to a builder — there is no mid-build course-correction.
-3. **Build + tests in one change** — vertical slices sized to stay in the model's sharp zone (~first 100k tokens of context); quality degrades past that and collapses past ~400k. Test-first per `/tdd`.
+3. **Build + tests in one change** — vertical slices sized per `/tdd`'s sharp-zone heuristic. Test-first per `/tdd`.
 4. **Suite green + lint** — state the result ("Tests: N pass"). Never claim done without it.
-5. **Adversarial review** — re-validate any risky part. The deciding question on any finding: "is it TRUE?", not "does it change runtime?". True quality findings get fixed; false ones dismissed with a one-line reason.
+5. **Adversarial review** — run `/code-review-pass` on the diff; every finding gets triaged there by the "is it TRUE?" rule.
 6. **Simplify** — quality-only cleanup of the *settled* diff (reuse, dead code, duplication).
-7. **Verify by RUNNING it** — drive the real artifact and look at the result. Green tests prove logic, not that it renders/runs. Screenshot for visual changes.
+7. **Verify** — run `/verify` on the change; a green suite proves logic, not that it renders/runs.
 8. **Hand back a decision packet** — one screen: 2–4 line diff summary + seam touched, test delta, verification evidence. The owner steers; they never read diffs.
 
 ## Rules

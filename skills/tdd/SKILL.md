@@ -9,7 +9,7 @@ Kent Beck's TDD, adapted for agents. Agents left alone write poor tests that are
 
 ## The loop (per vertical slice)
 
-1. **Slice vertically.** One thin end-to-end behaviour per slice, not a horizontal layer. Size each slice so the working context stays in the model's sharp zone (~first 100k tokens).
+1. **Slice vertically.** One thin end-to-end behaviour per slice, not a horizontal layer. Size each slice to stay in the model's sharp zone — as a rough heuristic, that's ~100k tokens of working context; watch for the observable signs of an oversized slice instead of counting tokens: the plan needs more than a few files to describe, you lose track of an earlier decision while implementing, or the diff starts touching unrelated areas. Any of those → split further.
 2. **RED** — write the test for the slice's behaviour FIRST and run it. It must fail, for the right reason. A test that passes before the code exists is testing nothing.
 3. **GREEN** — write the minimum code to pass. Run the suite.
 4. **Repeat** for the next slice. Refactor only on green.
