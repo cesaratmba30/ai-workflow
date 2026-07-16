@@ -1,12 +1,15 @@
 # ai-workflow
 
-20 skills implementing the AI-agent software workflow (deterministic rails braided
-around model judgment). Reconstructed from Zain's Flowgauge kit docs and walkthrough.
+24 skills implementing the AI-agent software workflow (deterministic rails braided
+around model judgment). Reconstructed from Zain's Flowgauge kit docs and walkthrough;
+see [CREDITS.md](CREDITS.md) for upstream sources.
 
 Outer lifecycle: /roast -> /storm-research -> /prototype -> /grill -> spec -> /to-issues.
 Inner loop: /resume -> plan -> build (/tdd) -> /code-review-pass -> /simplify -> /verify -> /handoff.
 Design & maintenance: /codebase-design, /domain-modeling, /improve-codebase-architecture,
-/diagnosing-bugs, /doc-audit, /harness-audit, /writing-great-skills, /teach.
+/diagnosing-bugs, /doc-audit, /harness-audit, /writing-great-skills, /teach,
+/zoom-out, /test-stabilizer, /skill-portfolio-audit.
+Issue flow: /triage — evaluates incoming issues before /resume routes them.
 Traceability: /traceability — durable AC IDs carried from spec through tasks, code, and tests.
 
 ## Install
