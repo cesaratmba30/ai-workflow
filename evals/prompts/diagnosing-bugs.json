@@ -1,0 +1,44 @@
+{
+ "skill": "diagnosing-bugs",
+ "trigger_markers": [
+  "(repro|mechanism)"
+ ],
+ "cases": [
+  {
+   "id": "hard_bug",
+   "prompt": "This is a hard bug \u2014 the export intermittently drops the last row; two fixes have already failed. Diagnose it properly.",
+   "should_trigger": true,
+   "expected_checks": [
+    "repro_red",
+    "cause_mechanism_order"
+   ]
+  },
+  {
+   "id": "still_broken",
+   "prompt": "Still broken after the patch: memory climbs 2%/hour in production. Run the full diagnosis loop.",
+   "should_trigger": true,
+   "expected_checks": [
+    "repro_red",
+    "falsifiable_claim"
+   ]
+  },
+  {
+   "id": "edge_trivial",
+   "prompt": "There's a typo in the button label, fix it.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

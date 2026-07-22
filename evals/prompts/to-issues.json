@@ -1,0 +1,46 @@
+{
+ "skill": "to-issues",
+ "trigger_markers": [
+  "Traces:"
+ ],
+ "cases": [
+  {
+   "id": "decompose",
+   "prompt": "The spec below is approved \u2014 break it into issues with dependencies. Spec: offline notes (AC-OFFL-01 create offline, AC-OFFL-02 sync on reconnect, AC-OFFL-03 conflict banner).",
+   "should_trigger": true,
+   "expected_checks": [
+    "vertical_slices",
+    "dependency_graph",
+    "traces_field"
+   ]
+  },
+  {
+   "id": "populate",
+   "prompt": "Populate the board from PLAN-search.md (has minted AC IDs).",
+   "should_trigger": true,
+   "expected_checks": [
+    "dependency_graph",
+    "traces_field"
+   ]
+  },
+  {
+   "id": "edge_sync",
+   "prompt": "Update the existing cards to match what we shipped.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's board-sync"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "skill": "teach",
+ "trigger_markers": [
+  "(quiz|syllabus|LEARNING-)"
+ ],
+ "cases": [
+  {
+   "id": "teach_topic",
+   "prompt": "Teach me Bayesian statistics over the coming weeks.",
+   "should_trigger": true,
+   "expected_checks": [
+    "learning_record"
+   ]
+  },
+  {
+   "id": "continue",
+   "prompt": "Continue my lessons \u2014 quiz me first.",
+   "should_trigger": true,
+   "expected_checks": [
+    "retrieval_quiz"
+   ]
+  },
+  {
+   "id": "edge_oneoff",
+   "prompt": "What's the formula for Bayes' theorem?",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

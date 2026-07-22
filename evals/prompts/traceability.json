@@ -1,0 +1,51 @@
+{
+ "skill": "traceability",
+ "trigger_markers": [
+  "(FR|NFR|AC|US)-[A-Z]"
+ ],
+ "cases": [
+  {
+   "id": "check_coverage",
+   "prompt": "Traceability check: are all ACs tested? Registry has AC-OFFL-01..03; suite has test_AC_OFFL_01_create_offline and test_AC_OFFL_99_ghost.",
+   "should_trigger": true,
+   "expected_checks": [
+    "fail_loud",
+    "id_grammar"
+   ]
+  },
+  {
+   "id": "mint",
+   "prompt": "Mint requirement IDs for this PRD section: users can export data; export completes under 30s; export excludes soft-deleted rows.",
+   "should_trigger": true,
+   "expected_checks": [
+    "id_grammar"
+   ]
+  },
+  {
+   "id": "silent_gaps",
+   "prompt": "Any silent gaps in coverage right now?",
+   "should_trigger": true,
+   "expected_checks": [
+    "coverage_line"
+   ]
+  },
+  {
+   "id": "edge_review",
+   "prompt": "Review the export code for correctness.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

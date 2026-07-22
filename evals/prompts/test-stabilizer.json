@@ -1,0 +1,46 @@
+{
+ "skill": "test-stabilizer",
+ "trigger_markers": [
+  "(flak|suite)"
+ ],
+ "cases": [
+  {
+   "id": "flaky",
+   "prompt": "CI is red again but it passes locally \u2014 stabilize the suite.",
+   "should_trigger": true,
+   "expected_checks": [
+    "flake_frequency",
+    "root_cause_named",
+    "no_sleep_retry"
+   ]
+  },
+  {
+   "id": "sometimes",
+   "prompt": "test_checkout_total fails about 1 in 4 runs. Fix it properly, no sleeps.",
+   "should_trigger": true,
+   "expected_checks": [
+    "root_cause_named",
+    "no_sleep_retry"
+   ]
+  },
+  {
+   "id": "edge_new_tests",
+   "prompt": "Write tests for the new checkout flow.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's tdd"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

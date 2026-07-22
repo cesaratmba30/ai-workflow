@@ -1,0 +1,44 @@
+{
+ "skill": "writing-great-skills",
+ "trigger_markers": [
+  "(description|trigger|frontmatter)"
+ ],
+ "cases": [
+  {
+   "id": "new_skill",
+   "prompt": "Write a skill for generating changelog entries from merged PRs.",
+   "should_trigger": true,
+   "expected_checks": [
+    "description_first",
+    "negative_cases"
+   ]
+  },
+  {
+   "id": "not_triggering",
+   "prompt": "Why isn't my 'pdf-report' skill triggering when users ask for reports?",
+   "should_trigger": true,
+   "expected_checks": [
+    "description_first"
+   ]
+  },
+  {
+   "id": "edge_eval",
+   "prompt": "Run the eval suite for the changelog skill.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "running evals is skill-eval"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

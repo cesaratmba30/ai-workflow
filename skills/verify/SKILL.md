@@ -1,9 +1,20 @@
 ---
 name: verify
-description: Run the real thing and look at the result — never trust green tests alone. Use before declaring any change done or pushing — "verify it", "prove it works", "did you actually run it". For visual changes, drive the UI and capture a screenshot; for non-visual changes, exercise the real path.
+description: Run the real thing and look at the result — never trust green tests alone. Use before declaring any change done or pushing — "verify it", "prove it works", "did you actually run it". For visual changes, drive the UI and capture a screenshot; for non-visual changes, exercise the real path. Do NOT use as a substitute for the test suite.
+metadata:
+  engine: fast
+  claude: claude-haiku-4-5 (low)
+  openai: gpt-5.6-luna (low)
+  subagent: recommended
+  concurrency: single-wait
+  atomic: true
 ---
 
 # /verify — run it, don't trust green
+
+> **Engine:** fast — Claude `haiku-4.5` (low) · OpenAI `gpt-5.6-luna` (low) · Subagent: recommended. Escalate to balanced if the evidence needs interpretation.
+>
+> **Concurrency:** Single-thread gate: nothing ships until the evidence is in.
 
 Tests prove the *logic*; they don't prove it *renders* or *runs* — a UI/mount bug passes the suite and paints wrong. And agents will claim "done" without looking ("AI lies"); verification must be forced, structurally. A change isn't done until the real result has been driven and LOOKED at.
 

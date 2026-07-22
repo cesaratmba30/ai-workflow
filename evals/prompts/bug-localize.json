@@ -1,0 +1,44 @@
+{
+ "skill": "bug-localize",
+ "trigger_markers": [
+  "(falsifiable|mechanism)"
+ ],
+ "cases": [
+  {
+   "id": "root_cause",
+   "prompt": "We have a red repro (test_dst_skip fails deterministically). Localize the root cause and confirm the mechanism \u2014 no fixes.",
+   "should_trigger": true,
+   "expected_checks": [
+    "falsifiable_claim",
+    "probe_flip"
+   ]
+  },
+  {
+   "id": "why_fails",
+   "prompt": "Why does this fail? Repro attached, goes red every run. Bisect and prove the mechanism.",
+   "should_trigger": true,
+   "expected_checks": [
+    "falsifiable_claim"
+   ]
+  },
+  {
+   "id": "edge_no_repro",
+   "prompt": "Users report the app 'sometimes feels slow'. Find the root cause.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "no repro yet - bug-repro first"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

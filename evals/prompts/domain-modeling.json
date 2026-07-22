@@ -1,0 +1,43 @@
+{
+ "skill": "domain-modeling",
+ "trigger_markers": [
+  "_Avoid:_|ADR|glossary"
+ ],
+ "cases": [
+  {
+   "id": "define_terms",
+   "prompt": "Define our terms: we keep mixing 'workspace', 'project', and 'space' for the same thing.",
+   "should_trigger": true,
+   "expected_checks": [
+    "canonical_term_format"
+   ]
+  },
+  {
+   "id": "record_decision",
+   "prompt": "Record this decision: billing periods are calendar months, not rolling 30 days, because finance reconciles monthly.",
+   "should_trigger": true,
+   "expected_checks": [
+    "adr_shape"
+   ]
+  },
+  {
+   "id": "edge_design_vocab",
+   "prompt": "What's a deep module vs a shallow one?",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "engineering vocab lives in codebase-design"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

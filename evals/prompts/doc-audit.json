@@ -1,0 +1,44 @@
+{
+ "skill": "doc-audit",
+ "trigger_markers": [
+  "(stale|dangling|redundan)"
+ ],
+ "cases": [
+  {
+   "id": "audit",
+   "prompt": "Audit the docs \u2014 it's been a heavy month of changes.",
+   "should_trigger": true,
+   "expected_checks": [
+    "findings_by_file",
+    "replace_not_append"
+   ]
+  },
+  {
+   "id": "stale",
+   "prompt": "Check for stale docs: README still mentions the old CLI name.",
+   "should_trigger": true,
+   "expected_checks": [
+    "findings_by_file"
+   ]
+  },
+  {
+   "id": "edge_guards",
+   "prompt": "Are the git hooks still firing?",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's harness-audit"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "skill": "storm-research",
+ "trigger_markers": [
+  "Executive summary",
+  "perspective"
+ ],
+ "cases": [
+  {
+   "id": "research_topic",
+   "prompt": "Storm research: what's the state of local-first sync engines (CRDTs vs OT) for production apps in 2026?",
+   "should_trigger": true,
+   "expected_checks": [
+    "briefing_structure",
+    "sources_present",
+    "citations_report"
+   ]
+  },
+  {
+   "id": "deep_dive",
+   "prompt": "Do a deep dive on whether we should adopt WebGPU for our charting library \u2014 multiple angles please.",
+   "should_trigger": true,
+   "expected_checks": [
+    "briefing_structure",
+    "conflicts_named",
+    "sources_present"
+   ]
+  },
+  {
+   "id": "edge_single_fact",
+   "prompt": "What's the current stable version of Node.js?",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "single fact lookup, not a panel"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

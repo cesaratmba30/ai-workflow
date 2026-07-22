@@ -1,0 +1,44 @@
+{
+ "skill": "skill-portfolio-audit",
+ "trigger_markers": [
+  "(KEEP|PIVOT|RETIRE|portfolio)"
+ ],
+ "cases": [
+  {
+   "id": "audit",
+   "prompt": "Audit the skills \u2014 which ones still earn their place, and what recurring work has no owner?",
+   "should_trigger": true,
+   "expected_checks": [
+    "portfolio_statuses",
+    "no_uninstall"
+   ]
+  },
+  {
+   "id": "need_skill",
+   "prompt": "Do we need a skill for weekly dependency updates, or does something cover it?",
+   "should_trigger": true,
+   "expected_checks": [
+    "no_uninstall"
+   ]
+  },
+  {
+   "id": "edge_one_skill",
+   "prompt": "Eval the roast skill's trigger accuracy before we ship the change.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's skill-eval"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

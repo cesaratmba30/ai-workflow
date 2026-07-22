@@ -1,11 +1,22 @@
 ---
 name: code-review-pass
-description: Two-axis adversarial code review of a diff or change set. Use before merging any non-trivial change — "review this diff", "code review", "check this PR". Axis 1 is standards and code smells; axis 2 is spec-vs-implementation. Every finding is triaged by "is it TRUE?", never by "does it change runtime?".
+description: Two-axis adversarial code review of a diff or change set. Use before merging any non-trivial change — "review this diff", "code review", "check this PR". Axis 1 is standards and code smells; axis 2 is spec-vs-implementation. Do NOT use for shape cleanup (simplify) or idea critique (roast).
+metadata:
+  engine: deep
+  claude: claude-opus-4-8 (high)
+  openai: gpt-5.6-sol (high)
+  subagent: recommended
+  concurrency: single-wait
+  atomic: true
 ---
 
 # /code-review-pass — the two-axis reviewer
 
-The default reviewer for a project. Complementary to a simplify pass: this hunts bugs and defects; simplify cleans shape. Reviews are judgment work — run them at high effort, never delegate to the cheapest model.
+> **Engine:** deep — Claude `opus-4.8` (high) · OpenAI `gpt-5.6-sol` (high) · Subagent: recommended (fresh adversarial context). Reviews are judgment work — never delegate to the cheapest model.
+>
+> **Concurrency:** Single-thread gate: the pipeline WAITS for the review before simplify/verify.
+
+The default reviewer for a project. Complementary to a simplify pass: this hunts bugs and defects; simplify cleans shape.
 
 ## Axis 1 — Standards + smells (the code on its own terms)
 

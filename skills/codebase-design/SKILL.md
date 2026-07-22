@@ -1,9 +1,20 @@
 ---
 name: codebase-design
-description: Shared vocabulary and rules for designing deep modules. Use when designing or restructuring modules, discussing architecture, or when terms like "deep module", "seam", "adapter", "interface design" come up. A reference skill — it defines the design bar every substantial change is held to.
+description: Shared vocabulary and rules for designing deep modules. Use when designing or restructuring modules, discussing architecture, or when terms like "deep module", "seam", "adapter", "interface design" come up. A reference skill — it defines the design bar every substantial change is held to. Do NOT use to execute a survey (architecture-survey) or model domain terms (domain-modeling).
+metadata:
+  engine: balanced
+  claude: claude-sonnet-5 (medium)
+  openai: gpt-5.6-terra (medium)
+  subagent: optional
+  concurrency: single
+  atomic: true
 ---
 
 # /codebase-design — the deep-module vocabulary
+
+> **Engine:** balanced reference — loads into whatever session needs it; active design work runs at the calling session's tier.
+>
+> **Concurrency:** Reference skill; loads into the calling thread.
 
 From John Ousterhout's *A Philosophy of Software Design*. AI compounds software entropy: every change made without regard for the whole system degrades it, and AI makes changes fast. The counter is keeping the codebase *easy to change* — a good codebase is exactly where AI performs well; a ball of mud is where it drowns.
 
@@ -21,14 +32,10 @@ From John Ousterhout's *A Philosophy of Software Design*. AI compounds software 
 1. **Design the interface first.** Before building, name the seam: what does the caller see, what is hidden? An interface decided mid-build is an interface nobody designed.
 2. **Test at the seam.** If a module needs its internals inspected to test it, the interface is wrong.
 3. **Information hiding.** A caller should not need to know the implementation's choices (formats, ordering, caching) — if it does, the abstraction leaks.
-4. **Pull complexity downward.** It's better for the module to be internally complex and simple to use than the reverse.
-5. **Single source of truth per behaviour.** One function/file owns each load-bearing computation; everything else calls it. Duplicated logic is drift waiting to happen.
+4. **Pull complexity downward.** Better for the module to be internally complex and simple to use than the reverse.
+5. **Single source of truth per behaviour.** One function/file owns each load-bearing computation; everything else calls it.
 6. **Somewhat general-purpose.** Design the interface for the class of need, implement only today's case.
 
 ## When actively designing
 
 State: the module's one-sentence purpose, its public interface (signatures), what it hides, its seam/tests, and what would make it shallower vs deeper. Prefer merging shallow modules into a deep one over adding another layer.
-
-## Attribution
-
-Distilled from John Ousterhout, *A Philosophy of Software Design* (deep modules, information hiding, complexity as the enemy). See also [agent-rules-books](https://github.com/mattpocock/agent-rules-books) (MIT) for comparable book-distilled rule sets.

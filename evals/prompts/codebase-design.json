@@ -1,0 +1,44 @@
+{
+ "skill": "codebase-design",
+ "trigger_markers": [
+  "(deep module|seam|interface)"
+ ],
+ "cases": [
+  {
+   "id": "design",
+   "prompt": "We're designing the sync module \u2014 apply the deep-module bar: what's the seam, what's hidden?",
+   "should_trigger": true,
+   "expected_checks": [
+    "seam_interface",
+    "ousterhout_vocab"
+   ]
+  },
+  {
+   "id": "vocab",
+   "prompt": "Is this class a shallow module? It has 9 getters wrapping a dict.",
+   "should_trigger": true,
+   "expected_checks": [
+    "ousterhout_vocab"
+   ]
+  },
+  {
+   "id": "edge_domain",
+   "prompt": "Define our domain terms and record today's decision about billing periods.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's domain-modeling"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

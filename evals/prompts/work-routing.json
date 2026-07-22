@@ -1,0 +1,44 @@
+{
+ "skill": "work-routing",
+ "trigger_markers": [
+  "Route:"
+ ],
+ "cases": [
+  {
+   "id": "route_backlog",
+   "prompt": "Here's the loaded state (board: 5 Ready items listed below; git clean). Propose 2-4 candidates with routing.\n- #12 fix flaky date test\n- #14 add CSV export\n- #15 refactor auth adapter\n- #18 landing page copy\n- #19 migrate to pnpm",
+   "should_trigger": true,
+   "expected_checks": [
+    "candidate_menu",
+    "routing_dimensions"
+   ]
+  },
+  {
+   "id": "which_next",
+   "prompt": "Which of these should we do next and how should it be routed: 'add rate limiting' or 'fix the leaderboard tie-break bug'?",
+   "should_trigger": true,
+   "expected_checks": [
+    "routing_dimensions"
+   ]
+  },
+  {
+   "id": "edge_execute",
+   "prompt": "Go build the CSV export feature now.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "routing never executes"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

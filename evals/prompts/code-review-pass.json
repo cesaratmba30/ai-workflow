@@ -1,0 +1,44 @@
+{
+ "skill": "code-review-pass",
+ "trigger_markers": [
+  "(blocker|should-fix|nit)"
+ ],
+ "cases": [
+  {
+   "id": "review_diff",
+   "prompt": "Code review this diff:\n```diff\n+def apply_discount(price, pct):\n+    if pct > 1: pct = pct / 100\n+    return price - price * pct\n-def apply_discount(price, pct):\n-    return price * (1 - pct)\n```\nSpec says: percentages arrive as 0-100 integers.",
+   "should_trigger": true,
+   "expected_checks": [
+    "severity_groups",
+    "is_it_true"
+   ]
+  },
+  {
+   "id": "check_pr",
+   "prompt": "Check this PR before merge: it claims to implement 'retry with backoff' per the plan, code pasted below... (retries forever, no jitter).",
+   "should_trigger": true,
+   "expected_checks": [
+    "severity_groups"
+   ]
+  },
+  {
+   "id": "edge_cleanup",
+   "prompt": "Clean up the shape of this settled diff \u2014 dead code and duplication only.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's simplify"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

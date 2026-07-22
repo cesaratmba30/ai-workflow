@@ -1,0 +1,46 @@
+{
+ "skill": "bug-repro",
+ "trigger_markers": [
+  "(red|fail)"
+ ],
+ "cases": [
+  {
+   "id": "build_repro",
+   "prompt": "Build a red-capable repro for this: saving a note with an emoji title 500s, but only sometimes. Don't fix anything yet.",
+   "should_trigger": true,
+   "expected_checks": [
+    "verbatim_capture",
+    "repro_red",
+    "no_fix_yet"
+   ]
+  },
+  {
+   "id": "make_it_fail",
+   "prompt": "Make this bug fail reliably in a test: the scheduler skips jobs across DST transitions.",
+   "should_trigger": true,
+   "expected_checks": [
+    "repro_red",
+    "no_fix_yet"
+   ]
+  },
+  {
+   "id": "edge_fix",
+   "prompt": "The mechanism is confirmed (off-by-one in pagination). Land the fix with a regression test.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's bug-fix-regression"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

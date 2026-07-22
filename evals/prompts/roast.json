@@ -1,0 +1,57 @@
+{
+ "skill": "roast",
+ "trigger_markers": [
+  "Verdict:\\s*(GO|RESHAPE|KILL)"
+ ],
+ "cases": [
+  {
+   "id": "idea_saas",
+   "prompt": "Roast this idea: a SaaS dashboard that tracks how happy each developer is based on their commit messages, sold to engineering managers at $50/seat.",
+   "should_trigger": true,
+   "expected_checks": [
+    "verdict_line",
+    "single_verdict",
+    "cheapest_test",
+    "persona_sections"
+   ]
+  },
+  {
+   "id": "idea_vague",
+   "prompt": "Is this worth building? An app that reminds people to drink water, but with AI.",
+   "should_trigger": true,
+   "expected_checks": [
+    "verdict_line",
+    "cheapest_test"
+   ]
+  },
+  {
+   "id": "idea_feature",
+   "prompt": "Poke holes in this feature idea before we commit: adding a real-time collaborative editor to our invoicing tool.",
+   "should_trigger": true,
+   "expected_checks": [
+    "verdict_line",
+    "single_verdict",
+    "cheapest_test"
+   ]
+  },
+  {
+   "id": "edge_not_code_review",
+   "prompt": "Review this diff for bugs: def add(a,b): return a-b",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "must route to code-review-pass, not roast"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

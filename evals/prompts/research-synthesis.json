@@ -1,0 +1,44 @@
+{
+ "skill": "research-synthesis",
+ "trigger_markers": [
+  "Executive summary"
+ ],
+ "cases": [
+  {
+   "id": "merge_lanes",
+   "prompt": "Synthesize these three research lanes into one briefing for the 'should we adopt Rust for the parser' decision:\nLane A (Researcher): benchmarks show 8x parse speed...\nLane B (Skeptic): rewrite cost estimated 4 months, two prior failed attempts at other companies...\nLane C (Practitioner): hiring pool thin; existing team has 1 Rust dev...",
+   "should_trigger": true,
+   "expected_checks": [
+    "briefing_structure",
+    "conflicts_named"
+   ]
+  },
+  {
+   "id": "conflicting",
+   "prompt": "Merge these findings \u2014 they disagree about whether serverless is cheaper at our scale. Lane 1 says 40% savings, Lane 2 says 2x cost past 100 req/s. Don't paper over it.",
+   "should_trigger": true,
+   "expected_checks": [
+    "conflicts_named"
+   ]
+  },
+  {
+   "id": "edge_new_research",
+   "prompt": "Research the serverless pricing landscape from scratch.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "new research is perspective/storm, not synthesis"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

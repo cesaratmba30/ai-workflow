@@ -1,0 +1,54 @@
+{
+ "skill": "tdd",
+ "trigger_markers": [
+  "(RED|failing test).*(GREEN|pass)"
+ ],
+ "cases": [
+  {
+   "id": "build_feature",
+   "prompt": "Build a leaderboard tie-break rule (ties broken by earliest submission) test-first.",
+   "should_trigger": true,
+   "expected_checks": [
+    "red_before_green",
+    "tests_pass_line"
+   ]
+  },
+  {
+   "id": "tdd_explicit",
+   "prompt": "TDD a function that parses ISO durations like P3DT4H into seconds.",
+   "should_trigger": true,
+   "expected_checks": [
+    "red_before_green",
+    "tests_pass_line"
+   ]
+  },
+  {
+   "id": "slice_check",
+   "prompt": "Test-first: users can archive a note and archived notes disappear from the default list.",
+   "should_trigger": true,
+   "expected_checks": [
+    "red_before_green",
+    "mutation_language"
+   ]
+  },
+  {
+   "id": "edge_prototype",
+   "prompt": "Mock up a quick throwaway script to see if this sort order feels right \u2014 no tests needed.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "prototype, explicitly exempt from tests"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

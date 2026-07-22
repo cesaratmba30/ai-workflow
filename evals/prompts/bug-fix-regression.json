@@ -1,0 +1,44 @@
+{
+ "skill": "bug-fix-regression",
+ "trigger_markers": [
+  "regression test"
+ ],
+ "cases": [
+  {
+   "id": "land_fix",
+   "prompt": "Mechanism confirmed: the cache key omits the locale, so users get each other's rendered pages. Land the fix regression-test-first and sweep for siblings.",
+   "should_trigger": true,
+   "expected_checks": [
+    "regression_test_first",
+    "sibling_sweep"
+   ]
+  },
+  {
+   "id": "fix_with_test",
+   "prompt": "Fix it with a regression test: confirmed off-by-one in the pager's last-page calculation.",
+   "should_trigger": true,
+   "expected_checks": [
+    "regression_test_first"
+   ]
+  },
+  {
+   "id": "edge_unconfirmed",
+   "prompt": "I think it's probably the cache, just patch that.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "unconfirmed mechanism - localize first"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}
