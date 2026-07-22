@@ -4,6 +4,8 @@
 
 Originally reconstructed from Zain's Flowgauge kit; v0.2 added golden-thread traceability (Rik Dryfoos / HomeFlow) plus ported skills (triage, zoom-out, test-stabilizer, skill-portfolio-audit — see [CREDITS.md](CREDITS.md)); v0.3 adds the eval discipline from Philipp Schmid's "Don't Ship Skills Without Evals" (Google DeepMind), atomic sub-skills for subagent delegation, and vendor-agnostic model/effort/concurrency routing.
 
+**Backlog:** this repo's own work is tracked the same way it tells you to track yours — [GitHub issues](https://github.com/cesaratmba30/ai-workflow/issues), [BOARD.md](BOARD.md) for card state, [docs/PRD-v0.3.1.md](docs/PRD-v0.3.1.md) for the traceability registry (`FR-`/`AC-` IDs).
+
 ## The lifecycle
 
 Outer lifecycle: `/roast` → `/storm-research` → `/prototype` → `/grill` → spec → `/to-issues`.
