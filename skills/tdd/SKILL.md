@@ -7,12 +7,13 @@ metadata:
   openai: gpt-5.6-terra (medium)
   subagent: recommended
   concurrency: single
-  atomic: true
+  atomic: false
+  composes: [checkpoint]
 ---
 
 # /tdd — test-first at our bar
 
-> **Engine:** balanced — Claude `sonnet-5` (medium) · OpenAI `gpt-5.6-terra` (medium) · Subagent: recommended (a builder lane runs this)
+> **Engine:** balanced — Claude `sonnet-5` (medium) · OpenAI `gpt-5.6-terra` (medium) · Subagent: recommended (a builder lane runs this). Each GREEN delegates to `checkpoint` (fast) — cheap enough that it doesn't change this skill's overall cost meaningfully.
 >
 > **Concurrency:** Single-thread within a lane: slices are sequential (red then green). Parallel lanes only for disjoint file areas.
 
@@ -23,7 +24,8 @@ Kent Beck's TDD, adapted for agents. Agents left alone write poor tests that are
 1. **Slice vertically.** One thin end-to-end behaviour per slice, not a horizontal layer. Size each slice so the working context stays in the model's sharp zone (~first 100k tokens).
 2. **RED** — write the test for the slice's behaviour FIRST and run it. It must fail, for the right reason. A test that passes before the code exists is testing nothing.
 3. **GREEN** — write the minimum code to pass. Run the suite.
-4. **Repeat** for the next slice. Refactor only on green.
+4. **Checkpoint** — `/checkpoint` (fast tier), every slice, right here, not deferred to the end of the item. A green slice is by definition a working, handoff-safe increment; this is exactly the moment to make it durable. A slice that never gets checkpointed is a slice an interruption can still eat.
+5. **Repeat** for the next slice. Refactor only on green.
 
 ## The bar every test must meet
 

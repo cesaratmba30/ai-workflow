@@ -24,13 +24,16 @@ Big multi-step skills are now **thin orchestrators** that compose **atomic sub-s
 | Orchestrator | Atomic sub-skills it composes |
 |---|---|
 | `resume` | `session-state-load`, `work-routing`, `board-sync`, `checkpoint` (+ `tdd`, `code-review-pass`, `simplify`, `verify` in the build cycle) |
-| `handoff` | `checkpoint` (which itself composes `board-sync` — the one case of nested composition in this kit; see `checkpoint`'s own frontmatter) |
+| `handoff` | `checkpoint` |
+| `tdd` | `checkpoint` (every GREEN slice, not just once per item) |
 | `storm-research` | `perspective-research` (×N, parallel), `research-synthesis`, `citation-check` |
 | `roast` | `persona-attack` (×N, parallel), `roast-judge` |
 | `improve-codebase-architecture` | `architecture-survey`, then `grill` per candidate |
 | `diagnosing-bugs` | `bug-repro`, `bug-localize`, `bug-fix-regression` |
 
 Everything from v0.2 is preserved: the orchestrators carry the same rules and output contracts; the phases just live in files you can also call on their own.
+
+`checkpoint` is this kit's first case of genuinely nested composition — `resume` composes `tdd`, and `tdd` itself composes `checkpoint` (per slice), so a single `/resume` call reaches `checkpoint` through two paths: directly (once per landed item) and transitively through `tdd` (once per GREEN slice inside that item). Both `tdd` and `checkpoint` are `atomic: false` in their frontmatter for exactly this reason — see `MODELS.md`'s routing rules for how tier assignment handles it.
 
 ## Model & effort routing (vendor-agnostic)
 

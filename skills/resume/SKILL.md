@@ -37,7 +37,7 @@ Run `/work-routing`: 2–4 candidates × route / autonomy tier / plan-first. The
 6. **Simplify** — `/simplify` on the settled diff (balanced tier).
 7. **Verify by RUNNING it** — `/verify`. Green tests prove logic, not that it renders/runs.
 8. **Decision packet** — one screen: 2–4 line diff summary + seam touched, test delta, verification evidence. The owner steers; they never read diffs.
-9. **Checkpoint** — `/checkpoint` (fast tier). Every item, no exceptions: it's cheap enough that running it after a trivial item costs nothing, and skipping it after a non-trivial one is exactly how an unannounced cutoff turns into lost work.
+9. **Checkpoint** — `/checkpoint` (fast tier). `/tdd` already checkpoints after every GREEN slice (step 3 already covers that ground); this is the item-level pass, catching what the slice-level ones don't — the review/simplify/verify steps above. Every item, no exceptions: cheap enough that running it after a trivial item costs nothing, and skipping it after a non-trivial one is exactly how an unannounced cutoff turns into lost work.
 
 ## Rules
 
