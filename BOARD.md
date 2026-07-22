@@ -12,23 +12,30 @@ never let it silently drift.
 First sync: 2026-07-22. This is the first time this repo has had a board —
 see `docs/PRD-v0.3.1.md` for why (retrofit after the fact, per owner request).
 
-## Shipped
+Second sync: 2026-07-22, same day — [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16)
+opened (`v0.3-atomic-skills-evals` → `main`). Per `/board-sync`'s own rule
+("built & merged → Shipped"), these cards are **built, not yet merged** —
+moved from Shipped to In review. Flagging this as the drift it is, not
+silently correcting it: the first BOARD.md draft called them Shipped before
+a PR existed to merge, which was premature.
+
+## In review
 
 | Card | Traces | Evidence |
 |---|---|---|
-| [#2 Restore marketplace.json](https://github.com/cesaratmba30/ai-workflow/issues/2) | FR-MKTP-01 | commit `6a0752f` |
-| [#3 Fix eval runner correctness](https://github.com/cesaratmba30/ai-workflow/issues/3) | FR-EVAL-01 | commit `6a0752f`, live smoke-tested |
-| [#4 Diversify negative test cases](https://github.com/cesaratmba30/ai-workflow/issues/4) | FR-EVAL-02 | commit `6a0752f` |
-| [#5 Fix documentation/metadata drift](https://github.com/cesaratmba30/ai-workflow/issues/5) | FR-DOCS-01 | commit `6a0752f` |
-| [#6 Make installer non-destructive](https://github.com/cesaratmba30/ai-workflow/issues/6) | FR-INST-01 | commit `6a0752f`, live smoke-tested |
-| [#7 Add MIT LICENSE](https://github.com/cesaratmba30/ai-workflow/issues/7) | FR-LIC-01 | commit `6a0752f` |
-| [#8 Add lightweight CI workflows](https://github.com/cesaratmba30/ai-workflow/issues/8) | FR-CI-01 | commit `6a0752f` |
+| [#2 Restore marketplace.json](https://github.com/cesaratmba30/ai-workflow/issues/2) | FR-MKTP-01 | commit `6a0752f`, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
+| [#3 Fix eval runner correctness](https://github.com/cesaratmba30/ai-workflow/issues/3) | FR-EVAL-01 | commit `6a0752f`, live smoke-tested, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
+| [#4 Diversify negative test cases](https://github.com/cesaratmba30/ai-workflow/issues/4) | FR-EVAL-02 | commit `6a0752f` + `37e7a73` (review fix), [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
+| [#5 Fix documentation/metadata drift](https://github.com/cesaratmba30/ai-workflow/issues/5) | FR-DOCS-01 | commit `6a0752f`, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
+| [#6 Make installer non-destructive](https://github.com/cesaratmba30/ai-workflow/issues/6) | FR-INST-01 | commit `6a0752f` + `37e7a73` (review fixes), live smoke-tested, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
+| [#7 Add MIT LICENSE](https://github.com/cesaratmba30/ai-workflow/issues/7) | FR-LIC-01 | commit `6a0752f`, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
+| [#8 Add lightweight CI workflows](https://github.com/cesaratmba30/ai-workflow/issues/8) | FR-CI-01 | commit `6a0752f` + `37e7a73` (review fix), [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
 
 ## Building
 
 | Card | Traces | Route | Note |
 |---|---|---|---|
-| [#9 Commit full Claude multi-trial eval results](https://github.com/cesaratmba30/ai-workflow/issues/9) | AC-EVAL-06 | inline | live run in progress, background process, logging to `evals/results/claude-v0.3.1-raw.txt` |
+| [#9 Commit full Claude multi-trial eval results](https://github.com/cesaratmba30/ai-workflow/issues/9) | AC-EVAL-06 | inline | live run in progress, background process, logging to `evals/results/claude-v0.3.1-raw.txt`; will land in a follow-up PR after #16 merges |
 
 ## Blocked
 
@@ -54,9 +61,11 @@ _(empty — nothing proposed and not yet accepted onto Ready)_
 
 ## Drift flags
 
-None as of this sync — first sync, board and git created from the same
-retrofit pass, so nothing has had a chance to drift yet. Future syncs should
-flag any card whose column contradicts git/CI/issue-state reality.
+- **2026-07-22, second sync:** cards #2–#8 were placed in Shipped on first
+  sync, before any PR existed. Corrected to In review (see above). Root
+  cause: the retrofit pass wrote the board from commit evidence alone
+  without checking merge state — a real instance of the exact drift
+  `/board-sync` exists to catch, caught on the very first re-sync.
 
 ## Coverage (three honest states, per `/traceability`)
 
