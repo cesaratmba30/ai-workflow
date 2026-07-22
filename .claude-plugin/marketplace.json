@@ -1,0 +1,11 @@
+{
+  "name": "cesaridrovo-plugins",
+  "owner": { "name": "Cesar Idrovo", "email": "cesar@mba30.com" },
+  "plugins": [
+    {
+      "name": "ai-workflow",
+      "source": "./",
+      "description": "The AI-agent software workflow: 38 skills covering the full lifecycle - idea validation, research, intent elicitation, prototyping, spec-to-issues, session bookends, test-first building, review, diagnosis, design, self-audits, and skill lifecycle management. Atomic sub-skills invocable via subagents, vendor-agnostic model/effort routing (Claude + OpenAI/Codex), and a per-skill eval harness."
+    }
+  ]
+}

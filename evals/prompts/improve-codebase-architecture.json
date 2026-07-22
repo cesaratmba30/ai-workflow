@@ -29,16 +29,23 @@
    "notes": "single known refactor, just plan+build"
   },
   {
-   "id": "neg_unrelated_csv",
-   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "id": "neg_unrelated_lit_summary",
+   "prompt": "Summarize the plot of Romeo and Juliet in three sentences.",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_naming",
+   "prompt": "Suggest a name for a new coffee shop downtown.",
    "should_trigger": false,
    "expected_checks": []
+  },
+  {
+   "id": "neg_collision_diagnosing_bugs",
+   "prompt": "This bug has resisted my first fix attempt \u2014 it's a hard one, diagnose it properly.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's diagnosing-bugs, not architecture deepening"
   }
  ]
 }

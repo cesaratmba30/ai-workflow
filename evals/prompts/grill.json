@@ -10,6 +10,10 @@
    "should_trigger": true,
    "expected_checks": [
     "single_question_interview"
+   ],
+   "judge_criteria": [
+    "Exactly one question is asked, not a bundled list of several questions in one turn.",
+    "The question is specific to offline support in a notes app (e.g. conflict resolution, sync scope, storage limits) -- not a generic 'what do you mean by offline?' that could be asked about any feature."
    ]
   },
   {
@@ -28,16 +32,23 @@
    "notes": "fully specified, skip the grill"
   },
   {
-   "id": "neg_unrelated_csv",
-   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "id": "neg_unrelated_recipe",
+   "prompt": "What's a good substitute for buttermilk in a pancake recipe?",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_travel_itinerary",
+   "prompt": "Plan a 3-day itinerary for a first trip to Lisbon.",
    "should_trigger": false,
    "expected_checks": []
+  },
+  {
+   "id": "neg_collision_roast",
+   "prompt": "Roast this idea before we commit: an app that reminds people to drink water, but with AI.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's roast (critiquing the idea's worth), not intent elicitation"
   }
  ]
 }

@@ -2,8 +2,10 @@
 
 Each check is a small function (output_text: str) -> bool, registered by id.
 Prompt sets reference checks via "expected_checks". Add new checks here;
-keep them regex/section-based and fast. LLM-as-judge lives in run_evals.py
-behind --judge and is used selectively (cost/latency).
+keep them regex/section-based and fast. LLM-as-judge (run_judge in
+run_evals.py, enabled via --judge) grades a case's optional "judge_criteria"
+list and is used selectively, only where a criterion is genuinely qualitative
+and a regex would be either too strict or too easy to game.
 """
 import re
 

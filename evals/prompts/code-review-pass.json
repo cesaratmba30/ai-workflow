@@ -11,6 +11,10 @@
    "expected_checks": [
     "severity_groups",
     "is_it_true"
+   ],
+   "judge_criteria": [
+    "The review catches that a percentage of exactly 1 (or any value <= 1) is NOT divided by 100 under the new `if pct > 1` guard, so a caller passing the spec's 0-100 integer form for a 1% discount gets a 100% discount instead -- a genuine boundary bug, not a nitpick about style.",
+    "The review does not fabricate a bug that isn't actually present in the diff (e.g. does not claim the discount math is inverted when it is not)."
    ]
   },
   {
@@ -29,16 +33,23 @@
    "notes": "that's simplify"
   },
   {
-   "id": "neg_unrelated_csv",
-   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "id": "neg_unrelated_recipe",
+   "prompt": "What's a good substitute for buttermilk in a pancake recipe?",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_travel_itinerary",
+   "prompt": "Plan a 3-day itinerary for a first trip to Lisbon.",
    "should_trigger": false,
    "expected_checks": []
+  },
+  {
+   "id": "neg_collision_roast",
+   "prompt": "Poke holes in this feature idea before we commit: adding a real-time collaborative editor to our invoicing tool.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's roast (idea critique), not a diff/PR review"
   }
  ]
 }

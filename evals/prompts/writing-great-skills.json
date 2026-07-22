@@ -29,14 +29,14 @@
    "notes": "running evals is skill-eval"
   },
   {
-   "id": "neg_unrelated_csv",
-   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "id": "neg_unrelated_recipe",
+   "prompt": "What's a good substitute for buttermilk in a pancake recipe?",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_travel_itinerary",
+   "prompt": "Plan a 3-day itinerary for a first trip to Lisbon.",
    "should_trigger": false,
    "expected_checks": []
   }

@@ -30,16 +30,23 @@
    "notes": "that's architecture-survey"
   },
   {
-   "id": "neg_unrelated_csv",
-   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "id": "neg_unrelated_haiku",
+   "prompt": "Write a haiku about autumn rain.",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_unit_conversion",
+   "prompt": "Convert 2.5 miles to kilometers.",
    "should_trigger": false,
    "expected_checks": []
+  },
+  {
+   "id": "neg_collision_teach",
+   "prompt": "Teach me how the auth system works over several sessions, with quizzes along the way.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's teach (ongoing learning record), not a one-off system-context explanation"
   }
  ]
 }

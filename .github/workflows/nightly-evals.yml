@@ -1,0 +1,65 @@
+name: nightly-evals
+
+# Full multi-trial eval suite, per evals/README.md's own guidance ("slow; use
+# in CI nightly, not per-commit"). Requires an ANTHROPIC_API_KEY repo secret;
+# skips cleanly (does not fail the run) if the secret isn't configured, so
+# forks and PRs from contributors without the secret don't get a red X here.
+
+on:
+  schedule:
+    - cron: "0 9 * * *" # 09:00 UTC daily
+  workflow_dispatch:
+    inputs:
+      skill:
+        description: "Run a single skill instead of the full suite (optional)"
+        required: false
+      trials:
+        description: "Trials per case"
+        required: false
+        default: "3"
+
+jobs:
+  claude-evals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for ANTHROPIC_API_KEY secret
+        id: keycheck
+        run: |
+          if [ -n "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::ANTHROPIC_API_KEY not set — skipping nightly eval run. Add the secret in repo settings to enable it."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.keycheck.outputs.present == 'true'
+        with:
+          node-version: "20"
+
+      - name: Install claude CLI
+        if: steps.keycheck.outputs.present == 'true'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - uses: actions/setup-python@v5
+        if: steps.keycheck.outputs.present == 'true'
+        with:
+          python-version: "3.11"
+
+      - name: Run eval suite (claude)
+        if: steps.keycheck.outputs.present == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "${{ github.event.inputs.skill }}" ]; then
+            python evals/run_evals.py --agent claude --skill "${{ github.event.inputs.skill }}" \
+              --trials "${{ github.event.inputs.trials || '3' }}"
+          else
+            python evals/run_evals.py --agent claude --all --trials "${{ github.event.inputs.trials || '3' }}"
+          fi
+
+      # Codex CLI isn't wired into this job yet -- add an equivalent step here
+      # (installing the codex CLI and passing --agent codex) once an
+      # OPENAI_API_KEY / codex-auth secret is available to this repo.

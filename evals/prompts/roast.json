@@ -13,6 +13,10 @@
     "single_verdict",
     "cheapest_test",
     "persona_sections"
+   ],
+   "judge_criteria": [
+    "The strongest objection raised is specific to this idea (e.g. gaming commit-message sentiment, privacy/surveillance concerns for developers, or manager misuse) -- not a generic 'market is competitive' or 'hard to build' objection that could apply to any SaaS idea.",
+    "The cheapest de-risking test proposed is something that could realistically be run before writing product code (e.g. a fake-door landing page, a manual pilot with one team, a survey), not 'build an MVP'."
    ]
   },
   {
@@ -42,16 +46,23 @@
    "notes": "must route to code-review-pass, not roast"
   },
   {
-   "id": "neg_unrelated_csv",
-   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "id": "neg_unrelated_recipe",
+   "prompt": "What's a good substitute for buttermilk in a pancake recipe?",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_travel_itinerary",
+   "prompt": "Plan a 3-day itinerary for a first trip to Lisbon.",
    "should_trigger": false,
    "expected_checks": []
+  },
+  {
+   "id": "neg_collision_grill",
+   "prompt": "Grill me about this idea: I want offline support in the notes app.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's grill (intent elicitation), not idea-worth critique"
   }
  ]
 }

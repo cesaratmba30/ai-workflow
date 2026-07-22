@@ -1,6 +1,6 @@
 # ai-workflow
 
-**v0.3.0** — 38 skills implementing the AI-agent software workflow (deterministic rails braided around model judgment), now atomic, evaluated, and platform-agnostic.
+**v0.3.1** — 38 skills implementing the AI-agent software workflow (deterministic rails braided around model judgment), now atomic, eval-harnessed, and platform-agnostic. "Eval-harnessed" means every skill has a wired prompt set, deterministic checks, and CI validation (`scripts/validate.py`); it does not yet mean every skill has committed live multi-trial pass-rate results — see [evals/RESULTS.md](evals/RESULTS.md) for what's actually been run.
 
 Originally reconstructed from Zain's Flowgauge kit; v0.2 added golden-thread traceability (Rik Dryfoos / HomeFlow) plus ported skills (triage, zoom-out, test-stabilizer, skill-portfolio-audit — see [CREDITS.md](CREDITS.md)); v0.3 adds the eval discipline from Philipp Schmid's "Don't Ship Skills Without Evals" (Google DeepMind), atomic sub-skills for subagent delegation, and vendor-agnostic model/effort/concurrency routing.
 
@@ -37,6 +37,8 @@ Every skill's frontmatter carries a `metadata` block naming its engine tier, the
 
 `evals/` contains a lightweight harness (per Schmid's workflow): per-skill prompt sets with positive, negative (must-NOT-trigger), and edge cases; deterministic regex/section checks; and a runner that works through both `claude` and `codex` CLIs. See [evals/README.md](evals/README.md). Don't ship a skill change without running its eval.
 
+**CI:** `.github/workflows/validate.yml` runs `scripts/validate.py` (frontmatter, metadata, compose links, eval-prompt wiring) as a required status check on every push/PR — this is static and fast, no model calls. `.github/workflows/nightly-evals.yml` runs the full multi-trial `claude` eval suite nightly (needs an `ANTHROPIC_API_KEY` repo secret; skips cleanly without one) — slow and cost-bearing by design, so it's nightly rather than per-commit. Latest published run results: [evals/RESULTS.md](evals/RESULTS.md).
+
 ## Install
 
 **Claude Code / Cowork (as a plugin):**
@@ -51,6 +53,16 @@ Or copy `skills/*` into `~/.claude/skills/` (personal) or `.claude/skills/` (pro
 **OpenAI Codex CLI:** skills follow the Agent Skills open standard. Copy or symlink `skills/*` into `~/.codex/skills/` (personal) or `.codex/skills/` (project), or run `scripts/install.sh codex`. `AGENTS.md` in this repo gives Codex the lifecycle map and routing rules.
 
 **Any other Agent-Skills-compatible tool** (Gemini CLI, Cursor, …): same `SKILL.md` format; install into that tool's skills directory. Run `scripts/install.sh --help` for options.
+
+**Installer scripts:** `scripts/install.sh` (macOS/Linux) and `scripts/install.ps1` (Windows/PowerShell) are both non-destructive — an existing skill at the destination is backed up (never deleted) before being replaced, and you're prompted to confirm unless you pass `--yes`/`-Yes`. Both support `--project`/`-Project`, `--copy`/`-Copy`, and `--dry-run`/`-DryRun`.
+
+```
+# macOS / Linux
+scripts/install.sh claude --project --copy
+
+# Windows
+scripts/install.ps1 claude -Project -Copy
+```
 
 ## Repo layout
 
@@ -67,5 +79,7 @@ ai-workflow/
 │   ├── run_evals.py     ← harness (claude + codex adapters)
 │   ├── checks.py        ← deterministic check registry
 │   └── prompts/<skill>.json
-└── scripts/install.sh
+└── scripts/
+    ├── install.sh        (macOS/Linux)
+    └── install.ps1       (Windows/PowerShell)
 ```

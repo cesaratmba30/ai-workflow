@@ -31,13 +31,13 @@
    "notes": "generating attacks is persona-attack/roast"
   },
   {
-   "id": "neg_unrelated_csv",
+   "id": "neg_unrelated_csv_script",
    "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
+   "id": "neg_unrelated_vendor_email",
    "prompt": "Draft a short email to a vendor asking for an updated invoice.",
    "should_trigger": false,
    "expected_checks": []

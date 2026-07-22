@@ -22,9 +22,17 @@ python evals/run_evals.py --agent claude --all
 
 # Retirement test: run with skills NOT installed; if pass rate holds, retire the skill
 python evals/run_evals.py --agent claude --skill tdd --no-skill
+
+# LLM-as-judge for cases with a "judge_criteria" list (qualitative grading,
+# extra CLI call per such case -- used selectively, not on every case)
+python evals/run_evals.py --agent claude --skill roast --judge
 ```
 
-The runner executes each prompt in an isolated temp workspace (context bleed masks failures), captures the agent's final output, runs the case's checks, and reports pass rate per check across trials — read the distribution, not one run.
+The runner executes each prompt in an isolated temp workspace (context bleed masks failures), captures the agent's final output, checks the CLI's exit code (a nonzero exit is always a hard error and is never scored as pass or fail, even if stdout looks plausible), runs the case's deterministic checks, optionally runs the LLM judge on any case carrying `judge_criteria`, and reports pass rate per check across trials — read the distribution, not one run.
+
+### LLM-as-judge
+
+Deterministic regex/section checks (`checks.py`) are the default and the fast path. A case can additionally declare a `judge_criteria` list — natural-language statements that are true only if the output is actually good, not just shaped right (e.g. "the objection raised is specific to this idea, not generic boilerplate"). Judging only runs when `--judge` is passed, and only for cases that declare criteria; it fails closed (all criteria FAIL) on a judge-call error, timeout, or missing CLI, so a broken judge can never silently pass a case.
 
 ## Ground rules (from the talk)
 
