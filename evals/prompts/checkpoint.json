@@ -1,0 +1,60 @@
+{
+ "skill": "checkpoint",
+ "trigger_markers": [
+  "Drift:|push(ed)?|nothing to push"
+ ],
+ "cases": [
+  {
+   "id": "after_item_lands",
+   "prompt": "That item's done and verified green. Checkpoint before we move to the next one -- push what's landed and sync the board.",
+   "should_trigger": true,
+   "expected_checks": [
+    "drift_line",
+    "push_status"
+   ]
+  },
+  {
+   "id": "after_background_launch",
+   "prompt": "I just kicked off a long eval run in the background. Checkpoint now before we keep going.",
+   "should_trigger": true,
+   "expected_checks": [
+    "push_status"
+   ]
+  },
+  {
+   "id": "explicit_invocation",
+   "prompt": "Run a checkpoint.",
+   "should_trigger": true,
+   "expected_checks": [
+    "drift_line",
+    "push_status"
+   ]
+  },
+  {
+   "id": "edge_handoff",
+   "prompt": "We're done for now -- wrap up the session, decide what's landed vs parked, and update the glossary if anything drifted.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's handoff -- land-or-park ceremony plus the heavier docs/glossary sweep, not a routine checkpoint"
+  },
+  {
+   "id": "edge_board_sync_only",
+   "prompt": "Just sync the board columns against git reality, nothing else needed right now.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's board-sync directly -- no push or note implied"
+  },
+  {
+   "id": "neg_unrelated_trivia",
+   "prompt": "Who won the 1998 World Cup final?",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_sql_query",
+   "prompt": "Write SQL to find the top 5 customers by total order value.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

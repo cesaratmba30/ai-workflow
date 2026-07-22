@@ -1,11 +1,12 @@
 # AGENTS.md — ai-workflow for Codex (and any Agent-Skills-compatible agent)
 
-This repo ships 38 skills implementing a full software-agent workflow. Skills live in `skills/<name>/SKILL.md` (Agent Skills open standard). Install into `~/.codex/skills/` or `.codex/skills/` (see `scripts/install.sh`). This file is the platform-neutral equivalent of the plugin manifest: the lifecycle map, routing rules, and translation notes.
+This repo ships 39 skills implementing a full software-agent workflow. Skills live in `skills/<name>/SKILL.md` (Agent Skills open standard). Install into `~/.codex/skills/` or `.codex/skills/` (see `scripts/install.sh`). This file is the platform-neutral equivalent of the plugin manifest: the lifecycle map, routing rules, and translation notes.
 
 ## Lifecycle
 
 - Outer (idea → work items): `roast` → `storm-research` → `prototype` → `grill` → spec → `to-issues`
 - Inner (session loop): `resume` → plan → build (`tdd`) → `code-review-pass` → `simplify` → `verify` → `handoff`
+- Durability: `checkpoint` — after every item in `resume`'s build cycle and right after launching any long-running background process; cheap, push+board-sync+note only, not a `handoff` substitute
 - Design & maintenance: `codebase-design`, `domain-modeling`, `improve-codebase-architecture`, `diagnosing-bugs`, `doc-audit`, `harness-audit`, `writing-great-skills`, `teach`, `skill-eval`
 
 ## Model & effort routing

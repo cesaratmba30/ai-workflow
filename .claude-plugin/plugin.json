@@ -1,7 +1,7 @@
 {
   "name": "ai-workflow",
   "version": "0.3.1",
-  "description": "The AI-agent software workflow: 38 skills covering the full lifecycle - idea validation (roast), research (storm-research), intent elicitation (grill), prototyping, spec-to-issues, session bookends (resume/handoff), test-first building (tdd), review (code-review-pass, simplify, verify), diagnosis, design, self-audits, and skill lifecycle (skill-eval, skill-adopt). v0.3: atomic sub-skills invocable via subagents with declared concurrency (parallel fan-out vs single-thread-and-wait), vendor-agnostic model/effort routing (Claude + OpenAI/Codex), and an eval harness per skill (Schmid workflow).",
+  "description": "The AI-agent software workflow: 39 skills covering the full lifecycle - idea validation (roast), research (storm-research), intent elicitation (grill), prototyping, spec-to-issues, session bookends (resume/handoff), durability (checkpoint), test-first building (tdd), review (code-review-pass, simplify, verify), diagnosis, design, self-audits, and skill lifecycle (skill-eval, skill-adopt). v0.3: atomic sub-skills invocable via subagents with declared concurrency (parallel fan-out vs single-thread-and-wait), vendor-agnostic model/effort routing (Claude + OpenAI/Codex), and an eval harness per skill (Schmid workflow).",
   "author": {
     "name": "Cesar Idrovo (from Zain's Flowgauge method; eval discipline from Philipp Schmid)"
   },

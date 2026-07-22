@@ -38,6 +38,7 @@ CHECK_REGISTRY = {
     "state_packet": _has(r"(board|git).*(git|board)", re.I | re.S),
     "git_evidence": _has(r"(git log|git status|commit|branch)"),
     "drift_line": _has(r"Drift:"),
+    "push_status": _has(r"(push(ed)?|nothing to push|up.to.date|N commits? ready to push)"),
     "routing_dimensions": _has(r"Route:.*(Autonomy|autonomy).*(Plan-first|plan-first)"),
     "candidate_menu": lambda out: len(re.findall(r"Route:", out)) >= 2,
     "three_states": _has(r"(verified).{0,200}(test.pending|tracked debt)"),

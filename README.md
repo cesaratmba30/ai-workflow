@@ -1,6 +1,6 @@
 # ai-workflow
 
-**v0.3.1** — 38 skills implementing the AI-agent software workflow (deterministic rails braided around model judgment), now atomic, eval-harnessed, and platform-agnostic. "Eval-harnessed" means every skill has a wired prompt set, deterministic checks, and CI validation (`scripts/validate.py`); it does not yet mean every skill has committed live multi-trial pass-rate results — see [evals/RESULTS.md](evals/RESULTS.md) for what's actually been run.
+**v0.3.1** — 39 skills implementing the AI-agent software workflow (deterministic rails braided around model judgment), now atomic, eval-harnessed, and platform-agnostic. "Eval-harnessed" means every skill has a wired prompt set, deterministic checks, and CI validation (`scripts/validate.py`); it does not yet mean every skill has committed live multi-trial pass-rate results — see [evals/RESULTS.md](evals/RESULTS.md) for what's actually been run.
 
 Originally reconstructed from Zain's Flowgauge kit; v0.2 added golden-thread traceability (Rik Dryfoos / HomeFlow) plus ported skills (triage, zoom-out, test-stabilizer, skill-portfolio-audit — see [CREDITS.md](CREDITS.md)); v0.3 adds the eval discipline from Philipp Schmid's "Don't Ship Skills Without Evals" (Google DeepMind), atomic sub-skills for subagent delegation, and vendor-agnostic model/effort/concurrency routing.
 
@@ -10,6 +10,7 @@ Originally reconstructed from Zain's Flowgauge kit; v0.2 added golden-thread tra
 
 Outer lifecycle: `/roast` → `/storm-research` → `/prototype` → `/grill` → spec → `/to-issues`.
 Inner loop: `/resume` → plan → build (`/tdd`) → `/code-review-pass` → `/simplify` → `/verify` → `/handoff`.
+Durability: `/checkpoint` — runs after every item in resume's build cycle and right after launching any long-running background process, so an unannounced interruption (usage limit, killed process, power loss) loses as little as possible. Cheap by design; not a substitute for `/handoff`'s land-or-park ceremony at a genuine session end.
 Issue flow: `/triage` — evaluates incoming issues before `/resume` routes them.
 Design & maintenance: `/codebase-design`, `/domain-modeling`, `/improve-codebase-architecture`, `/diagnosing-bugs`, `/doc-audit`, `/harness-audit`, `/test-stabilizer`, `/zoom-out`, `/teach`.
 Skill lifecycle: `/writing-great-skills`, `/skill-eval`, `/skill-adopt`, `/skill-portfolio-audit`.
@@ -22,8 +23,8 @@ Big multi-step skills are now **thin orchestrators** that compose **atomic sub-s
 
 | Orchestrator | Atomic sub-skills it composes |
 |---|---|
-| `resume` | `session-state-load`, `work-routing`, `board-sync` (+ `tdd`, `code-review-pass`, `simplify`, `verify` in the build cycle) |
-| `handoff` | `board-sync` |
+| `resume` | `session-state-load`, `work-routing`, `board-sync`, `checkpoint` (+ `tdd`, `code-review-pass`, `simplify`, `verify` in the build cycle) |
+| `handoff` | `checkpoint` (which itself composes `board-sync` — the one case of nested composition in this kit; see `checkpoint`'s own frontmatter) |
 | `storm-research` | `perspective-research` (×N, parallel), `research-synthesis`, `citation-check` |
 | `roast` | `persona-attack` (×N, parallel), `roast-judge` |
 | `improve-codebase-architecture` | `architecture-survey`, then `grill` per candidate |
@@ -75,7 +76,7 @@ ai-workflow/
 ├── MODELS.md            ← engine tiers → concrete model/effort mapping
 ├── .claude-plugin/plugin.json
 ├── CREDITS.md           ← upstream attribution (Pocock, Dryfoos, Schmid, Forward Future, STORM)
-├── skills/<name>/SKILL.md   (38 skills: 25 lifecycle + 13 atomic sub-skills)
+├── skills/<name>/SKILL.md   (39 skills: 26 lifecycle + 13 atomic sub-skills)
 ├── evals/
 │   ├── README.md
 │   ├── run_evals.py     ← harness (claude + codex adapters)
