@@ -8,12 +8,12 @@ metadata:
   subagent: no
   concurrency: interactive
   atomic: false
-  composes: [session-state-load, work-routing, board-sync, tdd, code-review-pass, simplify, verify]
+  composes: [session-state-load, work-routing, board-sync, checkpoint, tdd, code-review-pass, simplify, verify]
 ---
 
 # /resume — session-start bookend
 
-> **Engine:** balanced orchestrator, interactive (main thread). State load delegates to `session-state-load` (fast); routing to `work-routing` (balanced); the board move to `board-sync` (fast); the build cycle composes `tdd`/`code-review-pass`/`simplify`/`verify` at their own tiers.
+> **Engine:** balanced orchestrator, interactive (main thread). State load delegates to `session-state-load` (fast); routing to `work-routing` (balanced); the board move to `board-sync` (fast); each landed item to `checkpoint` (fast); the build cycle composes `tdd`/`code-review-pass`/`simplify`/`verify` at their own tiers.
 >
 > **Concurrency:** Main thread, owner in the loop. Build-cycle steps run sequentially; parallel builder lanes only for disjoint file areas, owner opt-in.
 
@@ -37,9 +37,11 @@ Run `/work-routing`: 2–4 candidates × route / autonomy tier / plan-first. The
 6. **Simplify** — `/simplify` on the settled diff (balanced tier).
 7. **Verify by RUNNING it** — `/verify`. Green tests prove logic, not that it renders/runs.
 8. **Decision packet** — one screen: 2–4 line diff summary + seam touched, test delta, verification evidence. The owner steers; they never read diffs.
+9. **Checkpoint** — `/checkpoint` (fast tier). `/tdd` already checkpoints after every GREEN slice (step 3 already covers that ground); this is the item-level pass, catching what the slice-level ones don't — the review/simplify/verify steps above. Every item, no exceptions: cheap enough that running it after a trivial item costs nothing, and skipping it after a non-trivial one is exactly how an unannounced cutoff turns into lost work.
 
 ## Rules
 
 - Parallel builder lanes only when the backlog splits into disjoint file areas; solo is first-class.
-- Commit/push only when the owner asks. Batch a coherent chunk into ONE PR.
+- Merging or opening a PR into the default branch only when the owner asks — batch a coherent chunk into ONE PR, same as always. This is unchanged; what changed is `/checkpoint`'s own commit/push behavior (see its Method) covering the gap between items, on whatever working branch is in use.
+- Immediately after launching any long-running background process (an eval suite, a long build, anything that will keep running unattended): run `/checkpoint` right then, not at the next natural item boundary. That launch moment is a spike in interruption risk on its own.
 - End the session with `/handoff`, never by just stopping.
