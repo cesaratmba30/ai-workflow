@@ -29,14 +29,14 @@
    "notes": "new research is perspective/storm, not synthesis"
   },
   {
-   "id": "neg_unrelated_csv",
-   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "id": "neg_unrelated_trivia",
+   "prompt": "Who won the 1998 World Cup final?",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_sql_query",
+   "prompt": "Write SQL to find the top 5 customers by total order value.",
    "should_trigger": false,
    "expected_checks": []
   }

@@ -1,6 +1,6 @@
 # AGENTS.md — ai-workflow for Codex (and any Agent-Skills-compatible agent)
 
-This repo ships 34 skills implementing a full software-agent workflow. Skills live in `skills/<name>/SKILL.md` (Agent Skills open standard). Install into `~/.codex/skills/` or `.codex/skills/` (see `scripts/install.sh`). This file is the platform-neutral equivalent of the plugin manifest: the lifecycle map, routing rules, and translation notes.
+This repo ships 38 skills implementing a full software-agent workflow. Skills live in `skills/<name>/SKILL.md` (Agent Skills open standard). Install into `~/.codex/skills/` or `.codex/skills/` (see `scripts/install.sh`). This file is the platform-neutral equivalent of the plugin manifest: the lifecycle map, routing rules, and translation notes.
 
 ## Lifecycle
 

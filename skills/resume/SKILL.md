@@ -8,12 +8,12 @@ metadata:
   subagent: no
   concurrency: interactive
   atomic: false
-  composes: [session-state-load, work-routing, tdd, code-review-pass, simplify, verify]
+  composes: [session-state-load, work-routing, board-sync, tdd, code-review-pass, simplify, verify]
 ---
 
 # /resume — session-start bookend
 
-> **Engine:** balanced orchestrator, interactive (main thread). State load delegates to `session-state-load` (fast); routing to `work-routing` (balanced); the build cycle composes `tdd`/`code-review-pass`/`simplify`/`verify` at their own tiers.
+> **Engine:** balanced orchestrator, interactive (main thread). State load delegates to `session-state-load` (fast); routing to `work-routing` (balanced); the board move to `board-sync` (fast); the build cycle composes `tdd`/`code-review-pass`/`simplify`/`verify` at their own tiers.
 >
 > **Concurrency:** Main thread, owner in the loop. Build-cycle steps run sequentially; parallel builder lanes only for disjoint file areas, owner opt-in.
 
@@ -25,7 +25,7 @@ Run `/session-state-load` (board → git → memory, drift flagged loudly).
 
 ## Step 2 — Propose work
 
-Run `/work-routing`: 2–4 candidates × route / autonomy tier / plan-first. The owner picks; the pick is the first board move (Options → Ready).
+Run `/work-routing`: 2–4 candidates × route / autonomy tier / plan-first. The owner picks; the pick is the first board move (Options → Ready), applied via `/board-sync` so the board stays truthful from the first move.
 
 ## Step 3 — Per-item build cycle (one pass, in order)
 

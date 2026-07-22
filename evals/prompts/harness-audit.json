@@ -29,16 +29,23 @@
    "notes": "that's doc-audit"
   },
   {
-   "id": "neg_unrelated_csv",
-   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "id": "neg_unrelated_trivia",
+   "prompt": "Who won the 1998 World Cup final?",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_sql_query",
+   "prompt": "Write SQL to find the top 5 customers by total order value.",
    "should_trigger": false,
    "expected_checks": []
+  },
+  {
+   "id": "neg_collision_tdd",
+   "prompt": "Write a failing test first, then make it pass, for the new checkout validation logic.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's tdd (application tests), not guard/hook smoke-testing"
   }
  ]
 }

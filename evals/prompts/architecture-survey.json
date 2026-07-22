@@ -32,16 +32,23 @@
    "notes": "execution goes through grill + normal build"
   },
   {
-   "id": "neg_unrelated_csv",
+   "id": "neg_unrelated_csv_script",
    "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
    "should_trigger": false,
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_recipe",
+   "prompt": "What's a good substitute for buttermilk in a pancake recipe?",
    "should_trigger": false,
    "expected_checks": []
+  },
+  {
+   "id": "neg_collision_improve_arch",
+   "prompt": "The codebase feels sloppy and hard to change after a stretch of fast building \u2014 help me improve the architecture.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's improve-codebase-architecture (the orchestrator); this phrasing asks for the full deepening pass, not a standalone read-only survey"
   }
  ]
 }

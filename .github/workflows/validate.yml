@@ -1,0 +1,28 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  static-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Repo self-check (frontmatter, metadata, compose links, eval wiring)
+        run: python scripts/validate.py
+
+      - name: marketplace.json is valid JSON
+        run: python -m json.tool .claude-plugin/marketplace.json > /dev/null
+
+      - name: plugin.json is valid JSON
+        run: python -m json.tool .claude-plugin/plugin.json > /dev/null
+
+      - name: install.sh syntax check
+        run: bash -n scripts/install.sh

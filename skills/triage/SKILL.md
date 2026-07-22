@@ -7,7 +7,7 @@ metadata:
   openai: gpt-5.6-terra (medium)
   subagent: no
   concurrency: interactive
-  atomic: true
+  atomic: false
   composes: [grill]
 ---
 
