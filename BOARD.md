@@ -19,23 +19,26 @@ moved from Shipped to In review. Flagging this as the drift it is, not
 silently correcting it: the first BOARD.md draft called them Shipped before
 a PR existed to merge, which was premature.
 
-## In review
+Third sync: 2026-07-22, same day — PR #16 **merged** by @cesaratmba30
+(merge commit `75ca2c1`). Cards #2–#8 move to Shipped for real this time.
+
+## Shipped
 
 | Card | Traces | Evidence |
 |---|---|---|
-| [#2 Restore marketplace.json](https://github.com/cesaratmba30/ai-workflow/issues/2) | FR-MKTP-01 | commit `6a0752f`, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
-| [#3 Fix eval runner correctness](https://github.com/cesaratmba30/ai-workflow/issues/3) | FR-EVAL-01 | commit `6a0752f`, live smoke-tested, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
-| [#4 Diversify negative test cases](https://github.com/cesaratmba30/ai-workflow/issues/4) | FR-EVAL-02 | commit `6a0752f` + `37e7a73` (review fix), [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
-| [#5 Fix documentation/metadata drift](https://github.com/cesaratmba30/ai-workflow/issues/5) | FR-DOCS-01 | commit `6a0752f`, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
-| [#6 Make installer non-destructive](https://github.com/cesaratmba30/ai-workflow/issues/6) | FR-INST-01 | commit `6a0752f` + `37e7a73` (review fixes), live smoke-tested, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
-| [#7 Add MIT LICENSE](https://github.com/cesaratmba30/ai-workflow/issues/7) | FR-LIC-01 | commit `6a0752f`, [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
-| [#8 Add lightweight CI workflows](https://github.com/cesaratmba30/ai-workflow/issues/8) | FR-CI-01 | commit `6a0752f` + `37e7a73` (review fix), [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
+| [#2 Restore marketplace.json](https://github.com/cesaratmba30/ai-workflow/issues/2) | FR-MKTP-01 | merged `75ca2c1` via [PR #16](https://github.com/cesaratmba30/ai-workflow/pull/16) |
+| [#3 Fix eval runner correctness](https://github.com/cesaratmba30/ai-workflow/issues/3) | FR-EVAL-01 | merged `75ca2c1`, live smoke-tested |
+| [#4 Diversify negative test cases](https://github.com/cesaratmba30/ai-workflow/issues/4) | FR-EVAL-02 | merged `75ca2c1` |
+| [#5 Fix documentation/metadata drift](https://github.com/cesaratmba30/ai-workflow/issues/5) | FR-DOCS-01 | merged `75ca2c1` |
+| [#6 Make installer non-destructive](https://github.com/cesaratmba30/ai-workflow/issues/6) | FR-INST-01 | merged `75ca2c1`, live smoke-tested |
+| [#7 Add MIT LICENSE](https://github.com/cesaratmba30/ai-workflow/issues/7) | FR-LIC-01 | merged `75ca2c1` |
+| [#8 Add lightweight CI workflows](https://github.com/cesaratmba30/ai-workflow/issues/8) | FR-CI-01 | merged `75ca2c1` |
 
 ## Building
 
 | Card | Traces | Route | Note |
 |---|---|---|---|
-| [#9 Commit full Claude multi-trial eval results](https://github.com/cesaratmba30/ai-workflow/issues/9) | AC-EVAL-06 | inline | live run in progress, background process, logging to `evals/results/claude-v0.3.1-raw.txt`; will land in a follow-up PR after #16 merges |
+| [#9 Commit full Claude multi-trial eval results](https://github.com/cesaratmba30/ai-workflow/issues/9) | AC-EVAL-06 | inline | live run in progress (background PID, local machine), logging to `evals/results/claude-v0.3.1-raw.txt` in the working tree; will land in a follow-up PR off current `main` once done |
 
 ## Blocked
 
