@@ -1,0 +1,42 @@
+{
+ "skill": "citation-check",
+ "trigger_markers": [
+  "Citations:\\s*\\d+\\s*checked"
+ ],
+ "cases": [
+  {
+   "id": "verify_brief",
+   "prompt": "Verify the citations in this briefing before I send it: 'CRDTs guarantee convergence [https://example.com/crdt-paper]. Automerge is the most-used library [https://example.com/blogpost].'",
+   "should_trigger": true,
+   "expected_checks": [
+    "citations_report"
+   ]
+  },
+  {
+   "id": "check_sources",
+   "prompt": "Check the sources in RESEARCH-sync.md and downgrade anything that doesn't hold up.",
+   "should_trigger": true,
+   "expected_checks": [
+    "citations_report"
+   ]
+  },
+  {
+   "id": "edge_code",
+   "prompt": "Check this code for bugs: function sum(a){return a+a}",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

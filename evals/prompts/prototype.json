@@ -1,0 +1,43 @@
+{
+ "skill": "prototype",
+ "trigger_markers": [
+  "(throwaway|disposable|question)"
+ ],
+ "cases": [
+  {
+   "id": "mock",
+   "prompt": "Prototype this before we spec: does the activity feed read better grouped by day or as one stream?",
+   "should_trigger": true,
+   "expected_checks": [
+    "one_question",
+    "throwaway_contract"
+   ]
+  },
+  {
+   "id": "see_it",
+   "prompt": "Let's see it before we decide \u2014 mock up the two candidate table layouts.",
+   "should_trigger": true,
+   "expected_checks": [
+    "throwaway_contract"
+   ]
+  },
+  {
+   "id": "edge_production",
+   "prompt": "Build the activity feed feature for production.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

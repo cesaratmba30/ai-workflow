@@ -1,0 +1,44 @@
+{
+ "skill": "simplify",
+ "trigger_markers": [
+  "behaviou?r[- ]preserving"
+ ],
+ "cases": [
+  {
+   "id": "clean_diff",
+   "prompt": "Simplify this settled diff \u2014 review findings are resolved: (diff adds a helper duplicating utils/format.py, leaves two debug prints, an unused import).",
+   "should_trigger": true,
+   "expected_checks": [
+    "behaviour_preserving",
+    "suite_rerun"
+   ]
+  },
+  {
+   "id": "cleanup",
+   "prompt": "Clean up the change we just landed review on \u2014 hunt reuse and dead code, apply the fixes.",
+   "should_trigger": true,
+   "expected_checks": [
+    "behaviour_preserving"
+   ]
+  },
+  {
+   "id": "edge_bugs",
+   "prompt": "Hunt for bugs in this diff.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "bug hunting is code-review-pass"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

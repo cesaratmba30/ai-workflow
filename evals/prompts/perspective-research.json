@@ -1,0 +1,46 @@
+{
+ "skill": "perspective-research",
+ "trigger_markers": [
+  "##\\s*Findings\\s*\u2014"
+ ],
+ "cases": [
+  {
+   "id": "skeptic_lane",
+   "prompt": "Use perspective-research: research 'GraphQL federation in large orgs' as The Skeptic only.",
+   "should_trigger": true,
+   "expected_checks": [
+    "findings_header",
+    "sources_present",
+    "open_questions"
+   ]
+  },
+  {
+   "id": "historian_lane",
+   "prompt": "Research the history of visual programming languages \u2014 historian's angle only: what was tried and why it died.",
+   "should_trigger": true,
+   "expected_checks": [
+    "findings_header",
+    "sources_present"
+   ]
+  },
+  {
+   "id": "edge_multi",
+   "prompt": "Research microfrontends from every perspective and synthesize a briefing.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "multi-angle+synthesis = storm-research"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

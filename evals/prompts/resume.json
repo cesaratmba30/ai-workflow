@@ -1,0 +1,45 @@
+{
+ "skill": "resume",
+ "trigger_markers": [
+  "Route:",
+  "board"
+ ],
+ "cases": [
+  {
+   "id": "start_session",
+   "prompt": "Resume \u2014 what's next on this project?",
+   "should_trigger": true,
+   "expected_checks": [
+    "git_evidence",
+    "routing_dimensions"
+   ]
+  },
+  {
+   "id": "pick_up",
+   "prompt": "Pick up where we left off yesterday.",
+   "should_trigger": true,
+   "expected_checks": [
+    "git_evidence"
+   ]
+  },
+  {
+   "id": "edge_close",
+   "prompt": "We're done for now, wrap up the session.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's handoff"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

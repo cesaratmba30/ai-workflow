@@ -1,0 +1,43 @@
+{
+ "skill": "grill",
+ "trigger_markers": [
+  "\\?"
+ ],
+ "cases": [
+  {
+   "id": "grill_me",
+   "prompt": "Grill me about this idea: I want offline support in the notes app.",
+   "should_trigger": true,
+   "expected_checks": [
+    "single_question_interview"
+   ]
+  },
+  {
+   "id": "braindump",
+   "prompt": "Interview me about this brain-dump before we plan: [half a page about a plugin marketplace].",
+   "should_trigger": true,
+   "expected_checks": [
+    "single_question_interview"
+   ]
+  },
+  {
+   "id": "edge_trivial",
+   "prompt": "Rename the 'Save' button to 'Store'.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "fully specified, skip the grill"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

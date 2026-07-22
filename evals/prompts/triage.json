@@ -1,0 +1,43 @@
+{
+ "skill": "triage",
+ "trigger_markers": [
+  "(needs-triage|ready-for-agent|triage)"
+ ],
+ "cases": [
+  {
+   "id": "board",
+   "prompt": "Triage the board \u2014 what needs attention?",
+   "should_trigger": true,
+   "expected_checks": [
+    "triage_states"
+   ]
+  },
+  {
+   "id": "one_issue",
+   "prompt": "Look at #42 (login loops on Safari) and triage it.",
+   "should_trigger": true,
+   "expected_checks": [
+    "triage_states"
+   ]
+  },
+  {
+   "id": "edge_pick_work",
+   "prompt": "What should we work on this session? Load state and give me routed options.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's resume"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

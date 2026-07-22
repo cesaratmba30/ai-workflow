@@ -1,0 +1,44 @@
+{
+ "skill": "harness-audit",
+ "trigger_markers": [
+  "(FIRING|DEAD|MISSING)"
+ ],
+ "cases": [
+  {
+   "id": "audit_guards",
+   "prompt": "Audit the harness \u2014 are the guards still firing after last week's hook refactor?",
+   "should_trigger": true,
+   "expected_checks": [
+    "guard_table",
+    "red_team_language"
+   ]
+  },
+  {
+   "id": "test_hooks",
+   "prompt": "Test the hooks: pre-commit, the CI merge gate, and the board-move script.",
+   "should_trigger": true,
+   "expected_checks": [
+    "guard_table"
+   ]
+  },
+  {
+   "id": "edge_prose",
+   "prompt": "Check the docs for stale claims.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's doc-audit"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

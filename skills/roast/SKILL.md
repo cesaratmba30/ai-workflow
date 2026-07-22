@@ -1,38 +1,29 @@
 ---
 name: roast
-description: Idea-validation council. Use when the user has a new product/feature idea and wants it stress-tested before committing to build — "roast this idea", "is this worth building", "poke holes in this". A multi-persona council attacks the idea from every angle and a Judge returns GO / RESHAPE / KILL plus the cheapest de-risking test.
+description: Idea-validation council. Use when the user has a new product/feature idea and wants it stress-tested before committing to build — "roast this idea", "is this worth building", "poke holes in this". Orchestrates parallel persona attacks and a Judge verdict (GO / RESHAPE / KILL) plus the cheapest de-risking test. Do NOT use for reviewing code (code-review-pass) or eliciting requirements (grill).
+metadata:
+  engine: balanced
+  claude: claude-sonnet-5 (medium)
+  openai: gpt-5.6-terra (medium)
+  subagent: no
+  concurrency: orchestrator
+  atomic: false
+  composes: [persona-attack, roast-judge]
 ---
 
 # /roast — GO / RESHAPE / KILL before any spend
 
+> **Engine:** balanced orchestrator — attacks run `persona-attack` (balanced, parallel subagents); the verdict runs `roast-judge` (deep).
+>
+> **Concurrency:** Fan out the council in parallel; WAIT for all attacks; the Judge runs once, after.
+
 An AI agent's default is to agree with you; `/roast` is the deliberate opposite, so a bad idea dies *before* it draws research or build spend. It decides **whether** to build (the grill, later, decides **what**).
 
-## Input
+## Method
 
-The owner's brain-dump of the idea — a paragraph or a page. Do quick online research first if market/competitor claims are checkable.
-
-## The council
-
-Run the idea through distinct personas, each attacking from their own angle. Each speaks in turn, concretely, citing the idea's own claims:
-
-- **The Skeptical Customer** — why would I not pay for / adopt this? What do I already use?
-- **The Competitor Analyst** — who does this already, and what would it take to match them? (Search for real competitors.)
-- **The Builder** — what's the hardest technical part, the hidden 80%?
-- **The Economist** — unit economics, pricing, market size, distribution. Who actually buys?
-- **The Operator** — support, maintenance, compliance, the boring costs after launch.
-- **The Devil's Advocate** — the strongest single argument that this whole idea is a mistake.
-
-No persona is allowed to be polite at the expense of being useful. Specific beats general ("Actionable Agile already ships this exact chart" beats "there's competition").
-
-## The Judge
-
-After the council, a Judge weighs the attacks and returns exactly one verdict:
-
-- **GO** — the idea survives; note the 1–2 attacks worth monitoring.
-- **RESHAPE** — the core survives but a stated change is required; name the reshape precisely.
-- **KILL** — the idea should not be built; state the decisive reason plainly.
-
-Plus, always: **the cheapest test to de-risk it** — the smallest, fastest, cheapest experiment that would confirm or refute the biggest open risk (a landing page, five customer conversations, a spreadsheet model, a throwaway prototype).
+1. **Input:** the owner's brain-dump — a paragraph or a page. Do quick online research first if market/competitor claims are checkable.
+2. **Fan out the council:** spawn one `/persona-attack` per persona (Skeptical Customer, Competitor Analyst, Builder, Economist, Operator, Devil's Advocate — swap for domain-fit personas when warranted), parallel and isolated, each with the idea + its angle.
+3. **Judge:** hand all attacks to `/roast-judge` (deep tier) for exactly one verdict + the cheapest de-risking test.
 
 ## Output
 

@@ -1,0 +1,45 @@
+{
+ "skill": "zoom-out",
+ "trigger_markers": [
+  "(module|big picture|responsibilit)"
+ ],
+ "cases": [
+  {
+   "id": "lost",
+   "prompt": "Zoom out \u2014 I'm lost in src/sync/journal.ts, how does this fit into the system?",
+   "should_trigger": true,
+   "expected_checks": [
+    "system_map",
+    "no_code_changes"
+   ]
+  },
+  {
+   "id": "big_picture",
+   "prompt": "Give me the big picture of the billing directory before I touch anything.",
+   "should_trigger": true,
+   "expected_checks": [
+    "system_map",
+    "no_code_changes"
+   ]
+  },
+  {
+   "id": "edge_refactor",
+   "prompt": "Survey the codebase for shallow modules and rank refactor candidates.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's architecture-survey"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

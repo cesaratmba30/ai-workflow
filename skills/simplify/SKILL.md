@@ -1,9 +1,20 @@
 ---
 name: simplify
-description: Quality-only cleanup pass over a settled diff. Use after review findings are resolved and before final verification — "simplify this diff", "clean up the change". Hunts reuse, dead code, duplication, and over-complication, and APPLIES the fixes. Does not hunt bugs (that's the code review's job).
+description: Quality-only cleanup pass over a settled diff. Use after review findings are resolved and before final verification — "simplify this diff", "clean up the change". Hunts reuse, dead code, duplication, and over-complication, and APPLIES the fixes. Do NOT use to hunt bugs (code-review-pass) or restyle/rename for taste.
+metadata:
+  engine: balanced
+  claude: claude-sonnet-5 (medium)
+  openai: gpt-5.6-terra (medium)
+  subagent: recommended
+  concurrency: single-wait
+  atomic: true
 ---
 
 # /simplify — clean the shape of the settled diff
+
+> **Engine:** balanced — Claude `sonnet-5` (medium) · OpenAI `gpt-5.6-terra` (medium) · Subagent: recommended
+>
+> **Concurrency:** Single-thread gate on the settled diff; wait for review findings to resolve first.
 
 Separating "find the bugs" (code review) from "clean the shape" (this pass) keeps each pass focused. Simplify runs on the *settled* diff — after review findings resolve — so it isn't cleaning code the review is still changing. Skipped for a trivial one-liner.
 

@@ -1,0 +1,45 @@
+{
+ "skill": "session-state-load",
+ "trigger_markers": [
+  "Drift:"
+ ],
+ "cases": [
+  {
+   "id": "state_only",
+   "prompt": "Load the project state \u2014 board, git, memory \u2014 and tell me if anything has drifted. Don't propose work yet.",
+   "should_trigger": true,
+   "expected_checks": [
+    "git_evidence",
+    "drift_line"
+   ]
+  },
+  {
+   "id": "where_are_we",
+   "prompt": "What's the current state of this repo and its board?",
+   "should_trigger": true,
+   "expected_checks": [
+    "git_evidence",
+    "drift_line"
+   ]
+  },
+  {
+   "id": "edge_pick_work",
+   "prompt": "What should we work on next? Give me options with routing.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "that's work-routing"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

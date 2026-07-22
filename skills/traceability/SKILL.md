@@ -1,9 +1,20 @@
 ---
 name: traceability
-description: The golden thread — durable requirement IDs machine-checked from PRD to spec to task to code to test. Use when writing a spec/PRD (mint IDs), when checking coverage ("are all ACs tested?", "traceability check", "any silent gaps?"), or when setting up the traceability gate in a project. Fails loud on gaps AND untraced scope.
+description: The golden thread — durable requirement IDs machine-checked from PRD to spec to task to code to test. Use when writing a spec/PRD (mint IDs), when checking coverage ("are all ACs tested?", "traceability check", "any silent gaps?"), or when setting up the traceability gate in a project. Fails loud on gaps AND untraced scope. Do NOT use for general code review or board syncing.
+metadata:
+  engine: fast
+  claude: claude-haiku-4-5 (low)
+  openai: gpt-5.6-luna (low)
+  subagent: recommended
+  concurrency: single
+  atomic: true
 ---
 
 # /traceability — the golden thread
+
+> **Engine:** fast — Claude `haiku-4.5` (low) · OpenAI `gpt-5.6-luna` (low) · Subagent: recommended. The check is a grep, not a judgment; minting IDs during spec-writing inherits the spec session's tier.
+>
+> **Concurrency:** Single-thread mechanical check; fast enough not to shard.
 
 From Rik Dryfoos' HomeFlow method (GE Healthcare design controls, adapted). Code is cheap; **proof is the constraint**. A generic "must have a test" rule accepts any test; requirement-shaped enforcement demands a test naming the specific AC — so the test must prove that AC's semantics. The gate's job isn't intelligence; it's stubbornness: it doesn't find bugs, it makes missing proof impossible to ignore.
 
@@ -47,8 +58,4 @@ A fourth state, **silent gap**, is the only forbidden one. Debt is fine; silent 
 
 ## Output
 
-When minting: the ID registry. When checking: the gap/untraced-scope list (each a FAIL line) or "golden thread intact," plus the three-state summary. The kit's `check-traceability.template.sh` is the deterministic version — prefer wiring it into CI over re-running this skill by hand.
-
-## Attribution
-
-From Rik Dryfoos' [HomeFlow](https://github.com/rdryfoos/HomeFlow) traceability method (durable IDs carried PRD → spec → tasks → code → tests), itself rooted in GE Healthcare design-controls practice. Adapted for this kit with a machine-checked gate. Built to compose with GitHub's [Spec Kit](https://github.com/github/spec-kit).
+When minting: the ID registry. When checking: the gap/untraced-scope list (each a FAIL line) or "golden thread intact," plus the three-state summary. Prefer wiring the deterministic script version into CI over re-running this skill by hand.

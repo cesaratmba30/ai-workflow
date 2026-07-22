@@ -1,15 +1,26 @@
 ---
 name: grill
-description: Intent-elicitation interview. Use before planning any ambiguous or substantial feature, when the user says "grill me", "interview me about this idea", or hands over a rough idea/markdown brain-dump. Asks one question at a time until user and agent share one design concept, then optionally writes the glossary and decision log ("grill with docs" mode).
+description: Intent-elicitation interview. Use before planning any ambiguous or substantial feature, when the user says "grill me", "interview me about this idea", or hands over a rough idea/markdown brain-dump. Asks one question at a time until user and agent share one design concept, then optionally writes the glossary and decision log ("grill with docs" mode). Do NOT use for trivial or fully-specified changes, or to critique the idea's worth (roast).
+metadata:
+  engine: deep
+  claude: claude-opus-4-8 (high)
+  openai: gpt-5.6-sol (high)
+  subagent: no
+  concurrency: interactive
+  atomic: true
 ---
 
 # /grill — one question at a time, until intent is truly shared
+
+> **Engine:** deep — Claude `opus-4.8` (high) · OpenAI `gpt-5.6-sol` (high) · Subagent: NO — interactive dialogue with the owner, main thread only.
+>
+> **Concurrency:** Main thread only: one question at a time, WAIT for each answer. Never batch questions, never delegate.
 
 Based on Frederick Brooks' *design concept* (The Design of Design) — the shared, un-writable-down idea two designers hold — and popularized as a skill by Matt Pocock. Plan mode is "eager to create an asset": it writes a detailed plan against a *wrong assumption* and everything downstream inherits the error. Grilling closes the intent gap through dialogue FIRST. This is the hinge of the outer lifecycle: its output is the raw material for the spec.
 
 ## When
 
-- Owner-invoked, ahead of the plan, for ambiguous or substantial work only. Skip for trivial or fully-specified changes.
+- Owner-invoked, ahead of the plan, for ambiguous or substantial work only.
 - Input: whatever the owner has — a sentence, a brain-dump markdown, a prototype.
 
 ## Method
@@ -25,16 +36,8 @@ Based on Frederick Brooks' *design concept* (The Design of Design) — the share
 ## Two modes
 
 - **grill (plain)** — the interview only; writes nothing. For a quick intent check or a non-code decision.
-- **grill with docs** — additionally writes back as it goes:
-  - sharpened/new terms → the domain glossary (one canonical term per concept, plus *Avoid* synonyms),
-  - durable rulings → the decisions log as ADR-style entries (decision, context, trade-off).
-  
-  This gives future sessions the same shared language instead of the LLM inventing new abbreviations for the same thing.
+- **grill with docs** — additionally writes back as it goes: sharpened/new terms → the domain glossary (one canonical term per concept, plus *Avoid* synonyms); durable rulings → the decisions log as ADR-style entries (decision, context, trade-off). This gives future sessions the same shared language instead of the LLM inventing new abbreviations for the same thing.
 
 ## Output
 
 The play-back summary (and in docs mode, the glossary/ADR diffs). This feeds the spec/PRD or, for small changes, goes straight to `/to-issues`.
-
-## Attribution
-
-Derived from [`grill-me`](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) and [`grill-with-docs`](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Conceptual root: Frederick Brooks' *design concept* (The Design of Design). Evolved for this kit.

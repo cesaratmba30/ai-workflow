@@ -1,0 +1,47 @@
+{
+ "skill": "architecture-survey",
+ "trigger_markers": [
+  "(shallow|seam|payoff)"
+ ],
+ "cases": [
+  {
+   "id": "survey",
+   "prompt": "Survey the architecture read-only: where is this codebase shallow, duplicated, or leaky? Rank the opportunities.",
+   "should_trigger": true,
+   "expected_checks": [
+    "ousterhout_vocab",
+    "ranked_output",
+    "blast_radius",
+    "read_only_survey"
+   ]
+  },
+  {
+   "id": "candidates",
+   "prompt": "Find refactor candidates and rank them by payoff over risk. Don't change anything.",
+   "should_trigger": true,
+   "expected_checks": [
+    "ranked_output",
+    "read_only_survey"
+   ]
+  },
+  {
+   "id": "edge_execute",
+   "prompt": "Merge the three shallow config modules into one deep module now.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "execution goes through grill + normal build"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

@@ -1,11 +1,22 @@
 ---
 name: domain-modeling
-description: Active glossary and ADR discipline. Use when domain terms are drifting or ambiguous, when the user says "define our terms", "update the glossary", "record this decision", or when starting a project that needs a shared vocabulary. Owns CONTEXT.md (ubiquitous language) and the decisions log (ADRs).
+description: Active glossary and ADR discipline. Use when domain terms are drifting or ambiguous, when the user says "define our terms", "update the glossary", "record this decision", or when starting a project that needs a shared vocabulary. Owns CONTEXT.md (ubiquitous language) and the decisions log (ADRs). Do NOT use for general design vocabulary (codebase-design) or doc rot (doc-audit).
+metadata:
+  engine: balanced
+  claude: claude-sonnet-5 (medium)
+  openai: gpt-5.6-terra (medium)
+  subagent: optional
+  concurrency: single
+  atomic: true
 ---
 
 # /domain-modeling — one canonical term per concept
 
-From Eric Evans' Domain-Driven Design: the **ubiquitous language** — developers, the code, and domain experts share ONE vocabulary. LLMs left alone invent their own synonyms and abbreviations for the same concept ("paragraph 31"), and every synonym is a future misunderstanding. The glossary kills that; the decisions log (ADRs) stops settled rulings being re-litigated.
+> **Engine:** balanced — Claude `sonnet-5` (medium) · OpenAI `gpt-5.6-terra` (medium) · Subagent: optional
+>
+> **Concurrency:** Single-thread: one writer to the glossary and decisions log.
+
+From Eric Evans' Domain-Driven Design: the **ubiquitous language** — developers, the code, and domain experts share ONE vocabulary. LLMs left alone invent their own synonyms and abbreviations for the same concept, and every synonym is a future misunderstanding. The glossary kills that; the decisions log (ADRs) stops settled rulings being re-litigated.
 
 ## The glossary (CONTEXT.md)
 
@@ -35,7 +46,3 @@ A slot is earned only by a decision a future session would otherwise re-open or 
 ## Rule for every other session
 
 Before naming any new concept, check CONTEXT.md. Use the canonical term or propose a new entry — never coin a synonym silently.
-
-## Attribution
-
-Ubiquitous language: Eric Evans, *Domain-Driven Design*. ADRs: Michael Nygard. Skill shape derived from [`grill-with-docs`](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs) in Matt Pocock's [Skills for Real Engineers](https://github.com/mattpocock/skills) (MIT). Evolved for this kit.

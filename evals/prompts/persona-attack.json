@@ -1,0 +1,45 @@
+{
+ "skill": "persona-attack",
+ "trigger_markers": [
+  "##\\s*Attack\\s*\u2014"
+ ],
+ "cases": [
+  {
+   "id": "economist",
+   "prompt": "Use the persona-attack skill: attack this idea as The Economist \u2014 a $9/month meal-planning app for students.",
+   "should_trigger": true,
+   "expected_checks": [
+    "attack_header",
+    "strongest_objection"
+   ]
+  },
+  {
+   "id": "builder",
+   "prompt": "Attack this as The Builder: an offline-first mobile CRM that syncs peer-to-peer without a server.",
+   "should_trigger": true,
+   "expected_checks": [
+    "attack_header",
+    "strongest_objection"
+   ]
+  },
+  {
+   "id": "edge_full_council",
+   "prompt": "Roast this idea from every angle and give me a final verdict: an AI tutor for chess.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "full council + verdict = roast, not one persona"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

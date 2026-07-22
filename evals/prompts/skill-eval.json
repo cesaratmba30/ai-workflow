@@ -1,0 +1,52 @@
+{
+ "skill": "skill-eval",
+ "trigger_markers": [
+  "(prompt set|should_trigger|trial)"
+ ],
+ "cases": [
+  {
+   "id": "eval_skill",
+   "prompt": "Eval this skill before we ship it: skills/changelog/SKILL.md (drafts changelog entries).",
+   "should_trigger": true,
+   "expected_checks": [
+    "prompt_set_json",
+    "negative_cases",
+    "multi_trial"
+   ]
+  },
+  {
+   "id": "why_not_trigger",
+   "prompt": "Test the roast skill \u2014 it seems to fire on plain code-review requests too.",
+   "should_trigger": true,
+   "expected_checks": [
+    "negative_cases"
+   ]
+  },
+  {
+   "id": "retirement",
+   "prompt": "Is the tdd skill still needed, or has the model absorbed it?",
+   "should_trigger": true,
+   "expected_checks": [
+    "multi_trial"
+   ]
+  },
+  {
+   "id": "edge_app_tests",
+   "prompt": "Write unit tests for the parser module.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

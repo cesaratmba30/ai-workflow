@@ -1,0 +1,44 @@
+{
+ "skill": "improve-codebase-architecture",
+ "trigger_markers": [
+  "(shallow|deep) module|seam"
+ ],
+ "cases": [
+  {
+   "id": "sloppy",
+   "prompt": "The codebase feels sloppy after a month of fast building \u2014 improve the architecture.",
+   "should_trigger": true,
+   "expected_checks": [
+    "ousterhout_vocab",
+    "ranked_output"
+   ]
+  },
+  {
+   "id": "modularize",
+   "prompt": "Clean up the codebase structure; find where to modularize.",
+   "should_trigger": true,
+   "expected_checks": [
+    "ousterhout_vocab"
+   ]
+  },
+  {
+   "id": "edge_known",
+   "prompt": "Extract the email sender into an adapter \u2014 we already know exactly what we want.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "single known refactor, just plan+build"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

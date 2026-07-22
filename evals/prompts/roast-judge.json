@@ -1,0 +1,46 @@
+{
+ "skill": "roast-judge",
+ "trigger_markers": [
+  "Verdict:\\s*(GO|RESHAPE|KILL)"
+ ],
+ "cases": [
+  {
+   "id": "judge_attacks",
+   "prompt": "Here are six persona attacks on our idea (pasted below). Judge them and give the verdict.\n1. Skeptical Customer: existing free tools cover 80%...\n2. Economist: CAC likely exceeds LTV at $9/mo...\n3. Builder: the sync engine is the hidden 80%...\n4. Operator: support load from data-loss complaints...\n5. Competitor Analyst: Notion templates already do this...\n6. Devil's Advocate: nobody asked for this.",
+   "should_trigger": true,
+   "expected_checks": [
+    "verdict_line",
+    "single_verdict",
+    "cheapest_test"
+   ]
+  },
+  {
+   "id": "judge_mixed",
+   "prompt": "What's the verdict on these critiques of our feature? Half say the market is tiny, half say distribution is solved by our existing user base.",
+   "should_trigger": true,
+   "expected_checks": [
+    "verdict_line",
+    "cheapest_test"
+   ]
+  },
+  {
+   "id": "edge_generate_attacks",
+   "prompt": "Generate the persona attacks for this idea: a podcast search engine.",
+   "should_trigger": false,
+   "expected_checks": [],
+   "notes": "generating attacks is persona-attack/roast"
+  },
+  {
+   "id": "neg_unrelated_csv",
+   "prompt": "Write a Python script that reads a CSV and plots a bar chart with matplotlib.",
+   "should_trigger": false,
+   "expected_checks": []
+  },
+  {
+   "id": "neg_unrelated_email",
+   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "should_trigger": false,
+   "expected_checks": []
+  }
+ ]
+}

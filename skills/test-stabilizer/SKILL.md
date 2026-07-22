@@ -1,9 +1,20 @@
 ---
 name: test-stabilizer
-description: Find flaky tests, fix their root causes, and prove stability with repeated full-suite runs. Use when tests pass sometimes and fail others — "flaky test", "CI is red again but it passes locally", "stabilize the suite". Never fixes a flake with a sleep or a retry.
+description: Find flaky tests, fix their root causes, and prove stability with repeated full-suite runs. Use when tests pass sometimes and fail others — "flaky test", "CI is red again but it passes locally", "stabilize the suite". Never fixes a flake with a sleep or a retry. Do NOT use for writing new tests (tdd) or diagnosing application bugs (diagnosing-bugs).
+metadata:
+  engine: balanced
+  claude: claude-sonnet-5 (medium)
+  openai: gpt-5.6-terra (medium)
+  subagent: recommended
+  concurrency: single
+  atomic: true
 ---
 
 # /test-stabilizer — kill flakes at the root
+
+> **Engine:** balanced — Claude `sonnet-5` (medium) · OpenAI `gpt-5.6-terra` (medium) · Subagent: recommended
+>
+> **Concurrency:** Single-thread: repeated suite runs must not overlap; parallel runs would themselves introduce flake noise.
 
 A flaky test is worse than a missing test: it trains everyone to ignore red. Blind sleeps and retries hide the root cause and slow the suite; this skill forbids them.
 
