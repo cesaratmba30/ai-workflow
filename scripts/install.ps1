@@ -66,9 +66,22 @@ function Test-AlreadyCorrect {
         return ($linkTarget -eq $Src)
     }
     if ($Copy) {
-        $diff = Compare-Object -ReferenceObject (Get-ChildItem -Recurse -File -LiteralPath $Src) `
-                                -DifferenceObject (Get-ChildItem -Recurse -File -LiteralPath $Dest) `
-                                -Property Name -ErrorAction SilentlyContinue
+        # Compare by relative path + content hash, not just filename -- a
+        # same-named file with different content (e.g. an updated SKILL.md)
+        # must NOT be reported as already correct.
+        $hash = {
+            param($root)
+            Get-ChildItem -Recurse -File -LiteralPath $root | ForEach-Object {
+                [PSCustomObject]@{
+                    RelPath = $_.FullName.Substring($root.Length).TrimStart('\', '/')
+                    Hash    = (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash
+                }
+            }
+        }
+        $srcFiles = & $hash $Src
+        $destFiles = & $hash $Dest
+        $diff = Compare-Object -ReferenceObject $srcFiles -DifferenceObject $destFiles `
+                                -Property RelPath, Hash -ErrorAction SilentlyContinue
         return (-not $diff)
     }
     return $false
@@ -116,7 +129,12 @@ function Install-Into {
         $installed++
     }
     $modeLabel = if ($Copy) { "copy" } else { "link" }
-    Write-Host "Installed $installed skill(s) -> $Dest ($modeLabel)"
+    if ($DryRun) {
+        Write-Host "[dry-run] Would install $installed skill(s) -> $Dest ($modeLabel)"
+    }
+    else {
+        Write-Host "Installed $installed skill(s) -> $Dest ($modeLabel)"
+    }
     if ($skipped -gt 0) {
         Write-Host "  Skipped $skipped existing skill(s) (declined or non-interactive)."
     }

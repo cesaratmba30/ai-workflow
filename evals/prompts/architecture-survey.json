@@ -38,8 +38,8 @@
    "expected_checks": []
   },
   {
-   "id": "neg_unrelated_vendor_email",
-   "prompt": "Draft a short email to a vendor asking for an updated invoice.",
+   "id": "neg_unrelated_recipe",
+   "prompt": "What's a good substitute for buttermilk in a pancake recipe?",
    "should_trigger": false,
    "expected_checks": []
   },

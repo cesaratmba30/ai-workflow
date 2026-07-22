@@ -103,7 +103,11 @@ install_into() {
     fi
     installed=$((installed + 1))
   done
-  echo "Installed $installed skill(s) -> $dest ($MODE)"
+  if [ "$DRY_RUN" = 1 ]; then
+    echo "[dry-run] Would install $installed skill(s) -> $dest ($MODE)"
+  else
+    echo "Installed $installed skill(s) -> $dest ($MODE)"
+  fi
   if [ "$skipped" -gt 0 ]; then
     echo "  Skipped $skipped existing skill(s) (declined or non-interactive)."
   fi
