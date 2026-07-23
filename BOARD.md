@@ -22,6 +22,32 @@ a PR existed to merge, which was premature.
 Third sync: 2026-07-22, same day — PR #16 **merged** by @cesaratmba30
 (merge commit `75ca2c1`). Cards #2–#8 move to Shipped for real this time.
 
+Fourth sync: 2026-07-23 — **owner is about to close this machine for
+travel and may continue from a different Mac.** Status frozen here so
+nothing depends on this machine's local state (an assistant's private
+memory, a background process) surviving. Real status as of this sync:
+
+- **PR #17** (new `/checkpoint` skill, not tracked as a separate FR/AC —
+  smaller, undocumented-as-formal-issue addition) — **merged**. `main` has
+  39 skills.
+- **PR #18** (eval runner fixes: per-skill model/effort routing, retry-
+  with-backoff, real error capture on failure — also not a separate
+  FR/AC) — **open, not yet merged**. Needs review.
+- **Card #9 (below) is NOT progressing cleanly** — two live full/partial
+  eval attempts both broke partway through with the same pattern. Moved
+  to Blocked, not Building — see below, this needs a decision before more
+  tokens are spent on a third attempt.
+
+**To continue on a different machine:** `git clone` (or pull, if already
+cloned there) `cesaratmba30/ai-workflow`, check out `main` for the merged
+state or the two open PR branches (`fix-eval-runner-model-routing`,
+and whichever branch PR #18 is still on) for in-review work. The `claude`
+CLI needs its own `claude /login` (or `ANTHROPIC_API_KEY`) on that machine —
+auth doesn't transfer between machines. This file, `docs/PRD-v0.3.1.md`,
+`evals/RESULTS.md`, `evals/results/README.md`, and the GitHub issues are
+the full durable state — nothing essential lives only in this session or
+this machine's local files.
+
 ## Shipped
 
 | Card | Traces | Evidence |
@@ -33,17 +59,19 @@ Third sync: 2026-07-22, same day — PR #16 **merged** by @cesaratmba30
 | [#6 Make installer non-destructive](https://github.com/cesaratmba30/ai-workflow/issues/6) | FR-INST-01 | merged `75ca2c1`, live smoke-tested |
 | [#7 Add MIT LICENSE](https://github.com/cesaratmba30/ai-workflow/issues/7) | FR-LIC-01 | merged `75ca2c1` |
 | [#8 Add lightweight CI workflows](https://github.com/cesaratmba30/ai-workflow/issues/8) | FR-CI-01 | merged `75ca2c1` |
+| `/checkpoint` skill | (untracked) | merged via [PR #17](https://github.com/cesaratmba30/ai-workflow/pull/17) |
 
-## Building
+## In review
 
-| Card | Traces | Route | Note |
-|---|---|---|---|
-| [#9 Commit full Claude multi-trial eval results](https://github.com/cesaratmba30/ai-workflow/issues/9) | AC-EVAL-06 | inline | live run in progress (background PID, local machine), logging to `evals/results/claude-v0.3.1-raw.txt` in the working tree; will land in a follow-up PR off current `main` once done |
+| Card | Route | Note |
+|---|---|---|
+| Eval runner fixes (model/effort routing, retry-with-backoff, error capture) | inline | [PR #18](https://github.com/cesaratmba30/ai-workflow/pull/18), open |
 
 ## Blocked
 
 | Card | Traces | Blocked by | Autonomy |
 |---|---|---|---|
+| [#9 Commit full Claude multi-trial eval results](https://github.com/cesaratmba30/ai-workflow/issues/9) | AC-EVAL-06 | root cause of 2 broken attempts (likely a token/cost usage cap — not confirmed) + an owner decision on how to proceed; see `evals/results/README.md` | gated (owner call before spending more) |
 | [#13 Tag and push v0.3.1](https://github.com/cesaratmba30/ai-workflow/issues/13) | AC-CI-03 | #9 | gated (owner confirms) |
 | [#10 Publish Codex multi-trial results](https://github.com/cesaratmba30/ai-workflow/issues/10) | AC-EVAL-07 | codex CLI access (owner) | gated |
 | [#11 Verify install.ps1 live](https://github.com/cesaratmba30/ai-workflow/issues/11) | AC-INST-02 | a `pwsh` runtime (owner) | supervised |
