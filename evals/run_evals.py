@@ -12,28 +12,69 @@ Usage:
 Design (per Schmid): isolated temp workspace per case (no context bleed),
 multiple trials (nondeterminism), deterministic checks from checks.py,
 marker-based trigger detection, outcome-graded not path-graded. A nonzero
-CLI exit code is always a hard error, never scored as pass or fail.
+CLI exit code is retried with backoff (transient rate-limit/overload
+failures observed to recover on their own); if it's still nonzero after
+retrying, that's a hard error, never scored as pass or fail.
 """
-import argparse, json, os, re, shutil, subprocess, sys, tempfile
+import argparse, json, os, re, shutil, subprocess, sys, tempfile, time
 from collections import defaultdict
 from pathlib import Path
+
+# Two independent full-suite runs both showed the same shape: clean for a
+# while, then EVERY subsequent call in that run fails with a bare nonzero
+# exit and empty stderr, never recovering for the rest of that run -- yet a
+# single isolated retry of the exact same case succeeds immediately. That
+# points at something tied to sustained call volume (rate limit / model
+# overload under load), not a broken case or a lasting outage. Retry with
+# backoff before giving up, instead of treating the first nonzero exit as
+# final.
+RETRY_ATTEMPTS = 3
+RETRY_BACKOFF_SECONDS = (5, 20, 60)
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
 sys.path.insert(0, str(HERE))
 from checks import run_checks  # noqa: E402
 
-# Default models per tier; override with --model. Update alongside MODELS.md.
+# Fallback models, used only when a skill's own frontmatter can't be read
+# (e.g. a prompt set with no matching skills/<name>/ dir). Update alongside
+# MODELS.md. Normal routing reads each skill's own claude:/openai: hint --
+# see skill_engine_hint() -- so a "fast" tier skill runs on haiku, not this.
 DEFAULT_MODEL = {
     "claude": "claude-sonnet-5",
     "codex": "gpt-5.6-terra",
 }
 
+# Env vars that must never leak from the caller's own shell/session into an
+# eval subprocess -- they'd silently override the per-skill model/effort
+# routing below with whatever tier the CALLER happened to be running at.
+_STRIP_ENV = ("CLAUDE_EFFORT",)
 
-def build_cmd(agent, model, prompt, workdir, with_skills):
+
+def skill_engine_hint(skill_name, agent):
+    """Read (model, effort) from skills/<name>/SKILL.md's own frontmatter --
+    e.g. `claude: claude-haiku-4-5 (low)` -> ("claude-haiku-4-5", "low").
+    Falls back to DEFAULT_MODEL / no effort override if the skill dir or the
+    hint line can't be found."""
+    skill_md = REPO / "skills" / skill_name / "SKILL.md"
+    if not skill_md.exists():
+        return DEFAULT_MODEL[agent], None
+    fm = skill_md.read_text()
+    key = "claude" if agent == "claude" else "openai"
+    m = re.search(rf"(?m)^\s*{key}:\s*([\w.-]+)\s*\((\w+)\)", fm)
+    if not m:
+        return DEFAULT_MODEL[agent], None
+    return m.group(1), m.group(2)
+
+
+def build_cmd(agent, model, prompt, workdir, with_skills, effort=None):
     """Return (cmd_list, env) for one run. Skills are installed into the temp
-    workdir (project scope) so each run is isolated; --no-skill omits them."""
+    workdir (project scope) so each run is isolated; --no-skill omits them.
+    `effort` is passed explicitly to the CLI -- never inherited from the
+    caller's environment, which is stripped below."""
     env = os.environ.copy()
+    for var in _STRIP_ENV:
+        env.pop(var, None)
     if agent == "claude":
         if with_skills:
             dest = Path(workdir) / ".claude" / "skills"
@@ -42,6 +83,8 @@ def build_cmd(agent, model, prompt, workdir, with_skills):
                 shutil.copytree(d, dest / d.name, dirs_exist_ok=True)
         cmd = ["claude", "-p", prompt, "--output-format", "json",
                "--model", model, "--max-turns", "12"]
+        if effort:
+            cmd += ["--effort", effort]
     elif agent == "codex":
         if with_skills:
             dest = Path(workdir) / ".codex" / "skills"
@@ -50,6 +93,10 @@ def build_cmd(agent, model, prompt, workdir, with_skills):
                 shutil.copytree(d, dest / d.name, dirs_exist_ok=True)
         cmd = ["codex", "exec", "--model", model, "--json",
                "--skip-git-repo-check", prompt]
+        # NOTE: codex's reasoning-effort flag is not verified in this
+        # environment (no codex CLI installed) -- see AGENTS.md's tier
+        # table for the intended low/medium/high/xhigh mapping. Left
+        # unset rather than guessing a flag name that could break the call.
     else:
         raise ValueError(f"unknown agent: {agent}")
     return cmd, env
@@ -76,7 +123,24 @@ def extract_output(agent, raw):
         return raw
 
 
-def build_judge_cmd(agent, model, output_text, criteria):
+def _run_with_retry(cmd, env, timeout, cwd=None):
+    """subprocess.run with retry-on-nonzero-exit, exponential backoff. Only
+    retries a bare nonzero exit (the pattern actually observed: transient,
+    recovers on its own) -- a timeout or missing binary is not retried here,
+    since those fail slow or aren't retry-fixable respectively."""
+    last = None
+    for attempt in range(RETRY_ATTEMPTS):
+        r = subprocess.run(cmd, capture_output=True, text=True,
+                            timeout=timeout, cwd=cwd, env=env)
+        if r.returncode == 0:
+            return r
+        last = r
+        if attempt < RETRY_ATTEMPTS - 1:
+            time.sleep(RETRY_BACKOFF_SECONDS[attempt])
+    return last
+
+
+def build_judge_cmd(agent, model, output_text, criteria, effort=None):
     """A judge call is a plain one-shot prompt asking a model to grade another
     model's output against a rubric -- no skills installed, no repo context."""
     rubric = "\n".join(f"{i}. {c}" for i, c in enumerate(criteria, 1))
@@ -89,18 +153,24 @@ def build_judge_cmd(agent, model, output_text, criteria):
         f"Agent output to grade:\n---\n{output_text}\n---"
     )
     if agent == "claude":
-        return ["claude", "-p", judge_prompt, "--output-format", "json", "--model", model]
+        cmd = ["claude", "-p", judge_prompt, "--output-format", "json", "--model", model]
+        if effort:
+            cmd += ["--effort", effort]
+        return cmd
     return ["codex", "exec", "--model", model, "--json", "--skip-git-repo-check", judge_prompt]
 
 
-def run_judge(agent, model, output_text, criteria, timeout):
+def run_judge(agent, model, output_text, criteria, timeout, effort=None):
     """Returns {criterion_text: bool}. Fails closed (all False) on any judge
     error -- a broken judge call must never silently pass a case."""
     if not criteria:
         return {}
-    cmd = build_judge_cmd(agent, model, output_text, criteria)
+    cmd = build_judge_cmd(agent, model, output_text, criteria, effort)
+    env = os.environ.copy()
+    for var in _STRIP_ENV:
+        env.pop(var, None)
     try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+        r = _run_with_retry(cmd, env, timeout)
         if r.returncode != 0:
             return {c: False for c in criteria}
         verdict_text = extract_output(agent, r.stdout)
@@ -113,29 +183,35 @@ def run_judge(agent, model, output_text, criteria, timeout):
     return results
 
 
-def run_case(agent, model, case, markers, with_skills, timeout, judge, judge_model):
+def run_case(agent, model, case, markers, with_skills, timeout, judge, judge_model,
+             effort=None, judge_effort=None):
     with tempfile.TemporaryDirectory(prefix="skill-eval-") as workdir:
-        cmd, env = build_cmd(agent, model, case["prompt"], workdir, with_skills)
+        cmd, env = build_cmd(agent, model, case["prompt"], workdir, with_skills, effort)
         try:
-            r = subprocess.run(cmd, capture_output=True, text=True,
-                               timeout=timeout, cwd=workdir, env=env)
+            r = _run_with_retry(cmd, env, timeout, cwd=workdir)
         except subprocess.TimeoutExpired:
             return {"error": "timeout", "triggered": None, "checks": {}, "judge": None}
         except FileNotFoundError:
             return {"error": f"{agent} CLI not found on PATH", "triggered": None,
                     "checks": {}, "judge": None}
         if r.returncode != 0:
-            # A nonzero exit means the CLI itself failed (crash, auth error,
-            # bad flags) -- never infer pass/fail from garbage/partial stdout.
+            # Still nonzero after RETRY_ATTEMPTS tries with backoff -- a
+            # genuine hard error, never infer pass/fail from garbage/
+            # partial stdout. But the actual reason is usually IN that stdout
+            # (e.g. `--output-format json` still emits a JSON body with an
+            # error/result field on a nonzero exit) -- stderr alone is often
+            # empty, so report both rather than silently discarding stdout.
             stderr_tail = (r.stderr or "").strip()[:300]
-            return {"error": f"nonzero exit ({r.returncode}): {stderr_tail}",
+            stdout_tail = extract_output(agent, r.stdout or "").strip()[:300]
+            detail = " | ".join(p for p in (stderr_tail, stdout_tail) if p) or "(no output)"
+            return {"error": f"nonzero exit ({r.returncode}): {detail}",
                     "triggered": None, "checks": {}, "judge": None}
         out = extract_output(agent, r.stdout)
 
     triggered = any(re.search(m, out, re.I | re.S) for m in markers) if markers else None
     judge_results = None
     if judge and case.get("judge_criteria"):
-        judge_results = run_judge(agent, judge_model, out, case["judge_criteria"], timeout)
+        judge_results = run_judge(agent, judge_model, out, case["judge_criteria"], timeout, judge_effort)
     result = {"error": None, "triggered": triggered,
               "checks": run_checks(case.get("expected_checks", []), out),
               "judge": judge_results,
@@ -163,8 +239,13 @@ def main():
     ap.add_argument("--agent", choices=["claude", "codex"], required=True)
     ap.add_argument("--skill")
     ap.add_argument("--all", action="store_true")
+    ap.add_argument("--only", help="comma-separated skill names to run, e.g. "
+                                    "for re-running just a broken subset")
     ap.add_argument("--trials", type=int, default=3)
-    ap.add_argument("--model")
+    ap.add_argument("--model", help="override: run every skill on this one model "
+                                     "instead of each skill's own declared tier")
+    ap.add_argument("--effort", help="override: force this effort for every call "
+                                      "(only meaningful together with --model)")
     ap.add_argument("--timeout", type=int, default=1800)
     ap.add_argument("--no-skill", action="store_true",
                     help="run WITHOUT skills installed (retirement test)")
@@ -172,13 +253,15 @@ def main():
                     help="also run LLM-as-judge on cases with judge_criteria "
                          "(extra CLI call per such case -- cost/latency, use selectively)")
     ap.add_argument("--judge-model",
-                    help="model for judge calls (default: same as --model)")
+                    help="model for judge calls (default: same tier as the skill under test)")
     args = ap.parse_args()
 
-    model = args.model or DEFAULT_MODEL[args.agent]
-    judge_model = args.judge_model or model
-    prompt_files = sorted((HERE / "prompts").glob("*.json")) if args.all else \
-        [HERE / "prompts" / f"{args.skill}.json"]
+    if args.only:
+        prompt_files = [HERE / "prompts" / f"{s.strip()}.json" for s in args.only.split(",")]
+    elif args.all:
+        prompt_files = sorted((HERE / "prompts").glob("*.json"))
+    else:
+        prompt_files = [HERE / "prompts" / f"{args.skill}.json"]
 
     grand = defaultdict(int)
     for pf in prompt_files:
@@ -186,7 +269,19 @@ def main():
             print(f"!! no prompt set: {pf.name}"); continue
         spec = json.loads(pf.read_text())
         markers = spec.get("trigger_markers", [])
-        print(f"\n=== {spec['skill']} ({args.agent}/{model}, "
+        skill = spec["skill"]
+
+        if args.model:
+            # Explicit override: same model (and effort, if given) for every
+            # call, bypassing each skill's own declared tier entirely.
+            model, effort = args.model, args.effort
+        else:
+            model, effort = skill_engine_hint(skill, args.agent)
+        judge_model = args.judge_model or model
+        judge_effort = effort
+
+        print(f"\n=== {skill} ({args.agent}/{model}"
+              f"{'/' + effort if effort else ''}, "
               f"{args.trials} trials, skills={'off' if args.no_skill else 'on'}, "
               f"judge={'on' if args.judge else 'off'}) ===")
         for case in spec["cases"]:
@@ -194,7 +289,8 @@ def main():
             errors = 0
             for _ in range(args.trials):
                 res = run_case(args.agent, model, case, markers,
-                               not args.no_skill, args.timeout, args.judge, judge_model)
+                               not args.no_skill, args.timeout, args.judge, judge_model,
+                               effort, judge_effort)
                 if res["error"]:
                     errors += 1
                     print(f"  {case['id']}: ERROR {res['error']}")
