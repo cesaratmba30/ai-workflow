@@ -12,11 +12,24 @@ Usage:
 Design (per Schmid): isolated temp workspace per case (no context bleed),
 multiple trials (nondeterminism), deterministic checks from checks.py,
 marker-based trigger detection, outcome-graded not path-graded. A nonzero
-CLI exit code is always a hard error, never scored as pass or fail.
+CLI exit code is retried with backoff (transient rate-limit/overload
+failures observed to recover on their own); if it's still nonzero after
+retrying, that's a hard error, never scored as pass or fail.
 """
-import argparse, json, os, re, shutil, subprocess, sys, tempfile
+import argparse, json, os, re, shutil, subprocess, sys, tempfile, time
 from collections import defaultdict
 from pathlib import Path
+
+# Two independent full-suite runs both showed the same shape: clean for a
+# while, then EVERY subsequent call in that run fails with a bare nonzero
+# exit and empty stderr, never recovering for the rest of that run -- yet a
+# single isolated retry of the exact same case succeeds immediately. That
+# points at something tied to sustained call volume (rate limit / model
+# overload under load), not a broken case or a lasting outage. Retry with
+# backoff before giving up, instead of treating the first nonzero exit as
+# final.
+RETRY_ATTEMPTS = 3
+RETRY_BACKOFF_SECONDS = (5, 20, 60)
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
@@ -110,6 +123,23 @@ def extract_output(agent, raw):
         return raw
 
 
+def _run_with_retry(cmd, env, timeout, cwd=None):
+    """subprocess.run with retry-on-nonzero-exit, exponential backoff. Only
+    retries a bare nonzero exit (the pattern actually observed: transient,
+    recovers on its own) -- a timeout or missing binary is not retried here,
+    since those fail slow or aren't retry-fixable respectively."""
+    last = None
+    for attempt in range(RETRY_ATTEMPTS):
+        r = subprocess.run(cmd, capture_output=True, text=True,
+                            timeout=timeout, cwd=cwd, env=env)
+        if r.returncode == 0:
+            return r
+        last = r
+        if attempt < RETRY_ATTEMPTS - 1:
+            time.sleep(RETRY_BACKOFF_SECONDS[attempt])
+    return last
+
+
 def build_judge_cmd(agent, model, output_text, criteria, effort=None):
     """A judge call is a plain one-shot prompt asking a model to grade another
     model's output against a rubric -- no skills installed, no repo context."""
@@ -140,7 +170,7 @@ def run_judge(agent, model, output_text, criteria, timeout, effort=None):
     for var in _STRIP_ENV:
         env.pop(var, None)
     try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, env=env)
+        r = _run_with_retry(cmd, env, timeout)
         if r.returncode != 0:
             return {c: False for c in criteria}
         verdict_text = extract_output(agent, r.stdout)
@@ -158,18 +188,23 @@ def run_case(agent, model, case, markers, with_skills, timeout, judge, judge_mod
     with tempfile.TemporaryDirectory(prefix="skill-eval-") as workdir:
         cmd, env = build_cmd(agent, model, case["prompt"], workdir, with_skills, effort)
         try:
-            r = subprocess.run(cmd, capture_output=True, text=True,
-                               timeout=timeout, cwd=workdir, env=env)
+            r = _run_with_retry(cmd, env, timeout, cwd=workdir)
         except subprocess.TimeoutExpired:
             return {"error": "timeout", "triggered": None, "checks": {}, "judge": None}
         except FileNotFoundError:
             return {"error": f"{agent} CLI not found on PATH", "triggered": None,
                     "checks": {}, "judge": None}
         if r.returncode != 0:
-            # A nonzero exit means the CLI itself failed (crash, auth error,
-            # bad flags) -- never infer pass/fail from garbage/partial stdout.
+            # Still nonzero after RETRY_ATTEMPTS tries with backoff -- a
+            # genuine hard error, never infer pass/fail from garbage/
+            # partial stdout. But the actual reason is usually IN that stdout
+            # (e.g. `--output-format json` still emits a JSON body with an
+            # error/result field on a nonzero exit) -- stderr alone is often
+            # empty, so report both rather than silently discarding stdout.
             stderr_tail = (r.stderr or "").strip()[:300]
-            return {"error": f"nonzero exit ({r.returncode}): {stderr_tail}",
+            stdout_tail = extract_output(agent, r.stdout or "").strip()[:300]
+            detail = " | ".join(p for p in (stderr_tail, stdout_tail) if p) or "(no output)"
+            return {"error": f"nonzero exit ({r.returncode}): {detail}",
                     "triggered": None, "checks": {}, "judge": None}
         out = extract_output(agent, r.stdout)
 
